@@ -85,11 +85,11 @@ export function FeesSection({ userRegion }: FeesSectionProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="flex items-baseline justify-center gap-2">
+                  <div className="flex items-baseline justify-center gap-1">
                     <CurrencyIcon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
-                    <div className="font-serif text-3xl md:text-4xl font-bold">
-                      {getPrice(pkg)}
-                    </div>
+                    <span className="font-serif text-3xl md:text-4xl font-bold">
+                      {getCurrencySymbol()}{getPrice(pkg)}
+                    </span>
                   </div>
                   {userRegion === "domestic" && (
                     <p className="text-xs text-muted-foreground">(+GST)</p>

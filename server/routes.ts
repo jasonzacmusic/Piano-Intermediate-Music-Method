@@ -162,36 +162,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       ];
 
       const europeanCountries = [
-        "GB", // United Kingdom
-        "DE", // Germany
-        "FR", // France
-        "IT", // Italy
-        "ES", // Spain
-        "NL", // Netherlands
-        "BE", // Belgium
-        "AT", // Austria
-        "CH", // Switzerland
-        "SE", // Sweden
+        // EU Member States
+        "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
+        "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
+        "PL", "PT", "RO", "SK", "SI", "ES", "SE",
+        // European Free Trade Association (EFTA)
+        "IS", // Iceland
+        "LI", // Liechtenstein
         "NO", // Norway
-        "DK", // Denmark
-        "FI", // Finland
-        "PT", // Portugal
-        "GR", // Greece
-        "IE", // Ireland
-        "PL", // Poland
-        "CZ", // Czech Republic
-        "RO", // Romania
-        "HU", // Hungary
-        "BG", // Bulgaria
-        "SK", // Slovakia
-        "HR", // Croatia
-        "SI", // Slovenia
-        "LT", // Lithuania
-        "LV", // Latvia
-        "EE", // Estonia
-        "LU", // Luxembourg
-        "MT", // Malta
-        "CY", // Cyprus
+        "CH", // Switzerland
+        // United Kingdom
+        "GB", // United Kingdom
+        // Other European Countries
+        "AL", // Albania
+        "AD", // Andorra
+        "AM", // Armenia
+        "BY", // Belarus
+        "BA", // Bosnia and Herzegovina
+        "GE", // Georgia
+        "MC", // Monaco
+        "ME", // Montenegro
+        "MK", // North Macedonia
+        "MD", // Moldova
+        "RS", // Serbia
+        "SM", // San Marino
+        "UA", // Ukraine
+        "VA", // Vatican City
       ];
 
       let region: "domestic" | "europe" | "international";
