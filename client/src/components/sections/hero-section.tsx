@@ -1,6 +1,5 @@
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { EnquiryForm } from "@/components/enquiry-form";
 
 interface HeroProps {
   data: {
@@ -69,15 +68,6 @@ export function HeroSection({ data, onEnrollClick }: HeroProps) {
                 <span>{item}</span>
               </div>
             ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="pt-8 max-w-xl mx-auto w-full"
-          >
-            <EnquiryForm />
           </motion.div>
         </div>
       </div>
