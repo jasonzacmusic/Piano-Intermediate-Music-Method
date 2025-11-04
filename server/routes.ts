@@ -183,8 +183,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error: any) {
       console.error('[COURSE-BUILDER] Error:', error);
-      res.status(400).json({ 
-        error: error.message || "Failed to process form submission" 
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          error: "Invalid form data. Please check your inputs and try again." 
+        });
+      }
+      
+      res.status(500).json({ 
+        error: error.message || "An unexpected error occurred. Please try again later." 
       });
     }
   });

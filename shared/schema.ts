@@ -37,6 +37,14 @@ export const courseBuilderFormSchema = z.object({
   classInterests: z.array(z.string()).min(1, "Select at least one class type"),
   preferredCallTime: z.string().min(1, "Please select a preferred call time"),
   additionalNotes: z.string().optional(),
+}).refine((data) => {
+  if (data.signupFor === "child" && !data.childAge) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Please provide the child's age",
+  path: ["childAge"],
 });
 
 export type CourseBuilderForm = z.infer<typeof courseBuilderFormSchema>;
