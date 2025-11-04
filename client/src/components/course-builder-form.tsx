@@ -146,7 +146,22 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
         description: "Thank you for filling out the form! Our course advisor will get in touch with you shortly.",
       });
       localStorage.removeItem(AUTOSAVE_KEY);
-      form.reset();
+      form.reset({
+        name: "",
+        email: "",
+        whatsappNumber: "",
+        countryCode: "",
+        city: "",
+        country: "",
+        signupFor: undefined,
+        learningGoals: [],
+        preferredGenre: [],
+        musicBackground: undefined,
+        pianoExperience: [],
+        pianoExperienceOther: "",
+        classInterests: [],
+        preferredCallTime: "",
+      });
       setStep(1);
       onClose();
     },
@@ -169,6 +184,23 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
         } catch (e) {
           console.error("Failed to load saved form data", e);
         }
+      } else {
+        form.reset({
+          name: "",
+          email: "",
+          whatsappNumber: "",
+          countryCode: "",
+          city: "",
+          country: "",
+          signupFor: undefined,
+          learningGoals: [],
+          preferredGenre: [],
+          musicBackground: undefined,
+          pianoExperience: [],
+          pianoExperienceOther: "",
+          classInterests: [],
+          preferredCallTime: "",
+        });
       }
     }
   }, [isOpen]);
