@@ -85,10 +85,10 @@ export function FeesSection({ userRegion }: FeesSectionProps) {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="flex items-baseline justify-center gap-1">
-                    <CurrencyIcon className="w-6 h-6 md:w-7 md:h-7 text-primary" />
+                  <div className="flex items-baseline justify-center gap-2">
+                    <CurrencyIcon className="w-6 h-6 md:w-7 md:h-7" />
                     <span className="font-serif text-3xl md:text-4xl font-bold">
-                      {getCurrencySymbol()}{getPrice(pkg)}
+                      {getPrice(pkg)}
                     </span>
                   </div>
                   {userRegion === "domestic" && (
