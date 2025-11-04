@@ -12,31 +12,22 @@ export function SEOSection() {
           className="max-w-4xl mx-auto space-y-6"
         >
           <div className="text-base md:text-lg text-muted-foreground leading-relaxed space-y-4">
+            <h2>🎹 Looking for Intermediate Piano Lessons in Bangalore or Online?</h2>
+
             <p>
-              Looking for <strong>piano lessons in Bangalore</strong> or wanting to <strong>learn piano from home</strong>?
+            The <strong>Nathaniel School of Music</strong>, led by <strong>Jason Zac</strong>, is recognised as one of the <strong>best music schools in Bangalore</strong> for piano learners who want to go beyond the basics. Our <strong>6-month Piano Intermediate Course</strong> is designed for students who already understand chords, scales, and simple songs and now want to master <strong>theory, ear training, transcription, and rhythm</strong> at a professional level.
             </p>
-            
+
             <p>
-              The <strong>Nathaniel School of Music</strong>, recognised as one of the <strong>best music schools in Bangalore</strong>, 
-              offers comprehensive, performance based <strong>piano classes</strong>.
+            This <strong>performance-based piano course</strong> blends practical playing, composition, and analysis through structured weekly lessons. You’ll train in <strong>Music Theory, Harmony, Rhythm, Ear Training,</strong> and <strong>Transcription</strong> while improving technique and musical expression through <strong>Music Factory</strong> (song transcription &amp; arrangement) and <strong>Music Gym</strong> (advanced technical drills &amp; creative exercises).
             </p>
-            
+
             <p>
-              Our 6-month <strong>Piano Foundation Course</strong> is perfect for beginners and combines practical playing skills, 
-              <strong>music theory</strong>, <strong>ear training</strong>, and mastery of <strong>chords and scales</strong>. 
-              Whether you are searching for "<strong>piano classes near me</strong>" or "<strong>beginner piano courses online</strong>", 
-              this course provides a structured, hands-on learning experience.
+            All classes include <strong>HD video recordings</strong>, <strong>handwritten notes</strong>, and <strong>graded feedback</strong> to help you build real-world musicianship. You can learn <strong>online</strong>, <strong>offline in Bangalore</strong>, or in a <strong>hybrid mode</strong>, with <strong>weekday and weekend batches</strong> to suit your schedule.
             </p>
-            
+
             <p>
-              You can choose the learning mode that suits you: online, offline, hybrid, private, or group.
-            </p>
-            
-            <p>
-              Join students from across Bangalore and around the globe who have trusted <strong>Jason Zac's piano courses</strong> to 
-              start their musical journey. With our structured curriculum, <strong>chord progression</strong> training, and personalised 
-              guidance, the <strong>Nathaniel School of Music</strong> is your go-to destination for <strong>piano lessons in Bangalore</strong> and 
-              <strong>online piano classes</strong>.
+            Whether you’re searching for <em>“intermediate piano classes near me”</em>, <em>“online piano lessons India”</em>, or <em>“best piano course in Bangalore”</em>, this program provides a <strong>structured, flexible, and inspiring path</strong> to becoming a complete musician. Join hundreds of students worldwide who continue their journey with <strong>Jason Zac’s advanced piano training</strong> and take your playing to the next level. 🌍🎶
             </p>
           </div>
         </motion.div>
