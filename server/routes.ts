@@ -85,7 +85,7 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
       <p>If you have any immediate questions, feel free to reach out to us:</p>
       <p>Email: music@nathanielschool.com<br/>WhatsApp: +91 77604 56847</p>
       <p>Looking forward to helping you begin your musical journey!</p>
-      <p>— Nathaniel School of Music</p>
+      <p>- Nathaniel School of Music</p>
     `;
 
     console.log('[COURSE-BUILDER] Attempting to send emails via Resend...');
@@ -98,14 +98,14 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
         to: ['music@nathanielschool.com'],
         subject: `New Intermediate Course Enquiry`,
         html: adminEmailHtml,
-        reply_to: 'music@nathanielschool.com',
+        replyTo: 'music@nathanielschool.com',
       }),
       resend.emails.send({
         from: 'Nathaniel School of Music <music@notifications.nathanielschool.com>',
         to: [data.email],
         subject: 'Thank you for reaching out to Nathaniel School of Music',
         html: userEmailHtml,
-        reply_to: 'music@nathanielschool.com',
+        replyTo: 'music@nathanielschool.com',
       }),
     ]);
 

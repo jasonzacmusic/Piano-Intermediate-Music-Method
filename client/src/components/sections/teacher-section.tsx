@@ -95,7 +95,7 @@ export function TeacherSection() {
               <p>
                 Jason comes from a family of music pioneers. His grandfathers, <strong className="text-foreground">Walter Nathaniel</strong> and 
                 <strong className="text-foreground"> A.D. Zachariah</strong>, were key figures in Western and Indian Classical Music in India, 
-                respectively—a legacy that informs his unique approach to music education.
+                respectively, a legacy that informs his unique approach to music education.
               </p>
             </div>
 
