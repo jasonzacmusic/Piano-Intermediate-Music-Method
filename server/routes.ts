@@ -88,7 +88,11 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
       <p>— Nathaniel School of Music</p>
     `;
 
-    await Promise.all([
+    console.log('[COURSE-BUILDER] Attempting to send emails via Resend...');
+    console.log('[COURSE-BUILDER] Admin email to:', 'music@nathanielschool.com');
+    console.log('[COURSE-BUILDER] User email to:', data.email);
+
+    const [adminResult, userResult] = await Promise.all([
       resend.emails.send({
         from: 'Nathaniel School of Music <music@nathanielschool.com>',
         to: ['music@nathanielschool.com'],
@@ -103,9 +107,12 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
       }),
     ]);
 
+    console.log('[COURSE-BUILDER] Admin email result:', JSON.stringify(adminResult));
+    console.log('[COURSE-BUILDER] User email result:', JSON.stringify(userResult));
     console.log('[COURSE-BUILDER] Successfully sent email notifications');
   } catch (error) {
     console.error('[COURSE-BUILDER] Email error:', error);
+    console.error('[COURSE-BUILDER] Error details:', JSON.stringify(error, null, 2));
     throw new Error('Failed to send email notifications');
   }
 }
