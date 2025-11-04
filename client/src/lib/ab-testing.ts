@@ -4,6 +4,8 @@ export interface ABTestVariant {
   id: string;
   name: string;
   weight?: number; // Optional weight for distribution (default: equal)
+  headline?: string; // Optional headline for hero variants
+  subheadline?: string; // Optional subheadline for hero variants
 }
 
 export interface ABTest {
@@ -69,22 +71,22 @@ export const AB_TESTS = {
     testId: 'hero_headline_test',
     variants: [
       {
-        id: 'original',
-        name: 'Original Headline',
-        headline: 'Learn Piano the Right Way – From Beginner to Performer in 6 Months',
-        subheadline: 'Structured. Practical. Performance-based. For all ages.',
+        id: 'method_focused',
+        name: 'Method Focused',
+        headline: 'Learn Piano Through Ear Training, Song Analysis & Practical Theory Classes',
+        subheadline: 'Intermediate & Advanced Program – Where Deep Listening, Chord Logic & Rhythm Theory Build Complete Musicians, Not Just Players.',
       },
       {
-        id: 'focus_on_speed',
-        name: 'Focus on Speed',
-        headline: 'Go From Never Played to Concert-Ready in Just 6 Months',
-        subheadline: 'Fast-track piano program designed for real-world performance.',
+        id: 'classroom_types',
+        name: 'Classroom Types',
+        headline: 'Intermediate Course: Music Factory Transcription, 3D Piano Gym & Theory Sessions',
+        subheadline: 'Four Specialized Classrooms for Advanced Students – Modular Piano Lessons, Music Gym Drills, Theory & Ear Training, Live Song Analysis.',
       },
       {
-        id: 'focus_on_mastery',
-        name: 'Focus on Mastery',
-        headline: 'Master Piano Skills That Actually Matter for Musicians',
-        subheadline: 'Learn to play, compose, and perform in any style or key.',
+        id: 'four_classrooms',
+        name: 'Four Classrooms',
+        headline: 'Learn Through Four Classrooms: Modular Piano, Theory & Ear Training, Music Gym, Music Factory',
+        subheadline: 'Advanced Piano Training Built on Transcription Work, Rhythm Theory & Musical Understanding – For Pianists Ready to Become Musicians.',
       },
     ],
   },
