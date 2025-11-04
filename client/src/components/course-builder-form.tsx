@@ -788,7 +788,7 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                 <FormField
                   control={form.control}
                   name="preferredCallTime"
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <FormItem>
                       <FormControl>
                         <Textarea
@@ -799,7 +799,9 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                           data-testid="textarea-call-time"
                         />
                       </FormControl>
-                      <FormMessage />
+                      {fieldState.isTouched && fieldState.error && (
+                        <FormMessage />
+                      )}
                     </FormItem>
                   )}
                 />
