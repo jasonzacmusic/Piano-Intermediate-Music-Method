@@ -4,12 +4,12 @@
     "subheadline": "Structured. Practical. Performance-based. For all ages.",
     "buttons": {
       "primary": {
-        "text": "Enrol Now",
-        "link": "https://forms.gle/rrfqJzL5TzoT57Nd6"
+        "text": "",
+        "link": ""
       },
       "secondary": {
-        "text": "Watch Explainer Video",
-        "link": "https://www.youtube.com/watch?v=XRCsDqzzNI4"
+        "text": "",
+        "link": ""
       }
     },
     "trust": [
@@ -295,7 +295,7 @@
       "patreon": "https://www.patreon.com/jasonzac",
       "whatsapp": "https://wa.me/917760456847",
       "email": "mailto:music@nathanielschool.com",
-      "enrolForm": "https://forms.gle/rrfqJzL5TzoT57Nd6"
+      "enrolForm": ""
     },
     "locations": [
       "Langford Town, Bangalore, India",

@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Download } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { trackEnrollmentClick, trackEnrollmentFormOpened } from "@/lib/analytics";
 import { EnquiryForm } from "@/components/enquiry-form";
 
 interface HeroProps {
@@ -71,24 +69,6 @@ export function HeroSection({ data, onEnrollClick }: HeroProps) {
                 <span>{item}</span>
               </div>
             ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex justify-center pt-4"
-          >
-            <Button
-              size="lg"
-              variant="outline"
-              className="gap-3 text-base md:text-lg px-8 py-6 min-h-14 border-2 border-primary/50 hover:bg-primary/10 hover:border-primary bg-background/50 backdrop-blur-sm"
-              onClick={() => window.open('/Piano-Foundation-Course-Brochure.pdf', '_blank')}
-              data-testid="button-download-brochure-hero"
-            >
-              <Download className="w-5 h-5" />
-              <span>Download Course Brochure</span>
-            </Button>
           </motion.div>
 
           <motion.div

@@ -18,7 +18,6 @@ import { FeesSection } from "@/components/sections/fees-section";
 import { FAQSection } from "@/components/sections/faq-section";
 import { SEOSection } from "@/components/sections/seo-section";
 import { Footer } from "@/components/sections/footer";
-import { StickyCTA } from "@/components/sticky-cta";
 import { StructuredData } from "@/components/structured-data";
 import landingData from "../../../content/landing.json";
 
@@ -122,8 +121,6 @@ export default function Home() {
       <SEOSection />
       
       <Footer data={landingData.footer} />
-      
-      <StickyCTA enrollLink={landingData.hero.buttons.primary.link} />
     </div>
   );
 }

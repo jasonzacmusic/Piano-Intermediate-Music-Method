@@ -71,16 +71,6 @@ export function FeesSection({ data, userRegion }: FeesSectionProps) {
                 <Button
                   size="lg"
                   className="w-full text-base md:text-lg py-6 min-h-14"
-                  onClick={() => window.open('https://forms.gle/rrfqJzL5TzoT57Nd6', '_blank')}
-                  data-testid="button-enrol-fees"
-                >
-                  Enrol Now
-                </Button>
-
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="w-full text-base md:text-lg py-6 min-h-14"
                   onClick={() => window.open('https://wa.me/917760456847', '_blank')}
                   data-testid="button-whatsapp-fees"
                 >
