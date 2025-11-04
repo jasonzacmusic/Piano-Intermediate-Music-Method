@@ -18,9 +18,13 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
 export const courseBuilderFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  name: z.string()
+    .min(2, "Name must be at least 2 characters")
+    .regex(/^[a-zA-Z\s]+$/, "Name must contain only letters and spaces"),
   email: z.string().email("Invalid email address"),
-  whatsappNumber: z.string().min(10, "WhatsApp number must be at least 10 digits"),
+  whatsappNumber: z.string()
+    .min(10, "WhatsApp number must be at least 10 digits")
+    .regex(/^[0-9]+$/, "WhatsApp number must contain only digits"),
   countryCode: z.string().min(1, "Country code is required"),
   city: z.string().min(2, "City is required"),
   country: z.string().min(2, "Country is required"),
