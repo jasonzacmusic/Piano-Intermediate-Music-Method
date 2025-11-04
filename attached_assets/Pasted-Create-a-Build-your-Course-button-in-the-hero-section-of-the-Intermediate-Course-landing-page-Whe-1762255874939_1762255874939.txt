@@ -1,0 +1,88 @@
+Create a “Build your Course” button in the hero section of the Intermediate Course landing page. When clicked, it should open a dynamic, multi-step form modal that collects user information to help plan their Intermediate Course at the Nathaniel School of Music.
+
+🎨 Form Requirements
+* The form must be interactive, responsive, and easy to use on both desktop and mobile.
+* Each section should appear one at a time, with “Next” and “Back” buttons and a progress bar / step indicator that shows the section name (not numbers).
+* Use Tailwind CSS for a clean, compact layout consistent with the landing page design.
+* Include smooth fade or slide transitions between sections.
+* All fields are required, and each input type must match what is mentioned in brackets (text, email, phone, checkbox, radio, etc.).
+* Add autosave functionality using localStorage so that if a user refreshes, loses connection, or pauses midway, their data is not lost.
+* Validate inputs section by section before proceeding:
+    * Each section should show clear inline error messages if any field is incorrect or empty.
+    * Validation rules:
+        * Name – letters and spaces only
+        * Email – must be valid
+        * WhatsApp Number – must include country code and digits only
+* Do not allow users to move forward until the inputs in that section are valid.
+* Include a loading indicator during submission and show a confirmation modal after success.
+
+⚙️ On Submission
+1. Store all responses in the Google Sheet:
+    * Name: NSM Website - Form Responses
+    * Tab: Intermediate
+    * Sheet ID: 16BNZdshYZC-SeG2Yar1pzM1ggQu2k9Y73U_CGlCYDck
+    * Use the Google Sheets credentials already configured in account secrets.
+2. Send Resend email notifications (Resend API already configured in secrets):
+To the User: Subject: Thank you for reaching out to Nathaniel School of Music Body: Hi (User’s First Name),
+Thank you for filling out the form! We’ve received your details and our team will reach out to you shortly via WhatsApp or phone at (User’s WhatsApp Number).
+What's Next? • Our team will contact you within 24 hours • We’ll discuss the course structure and answer any questions • You can choose between Online, Offline (Bangalore), or Hybrid modes
+If you have any immediate questions, feel free to reach out to us: Email: music@nathanielschool.com WhatsApp: +91 77604 56847
+Looking forward to helping you begin your musical journey!
+— Nathaniel School of Music
+To the Admin: Subject: New Intermediate Course Enquiry Body: A new enquiry has been submitted for the Intermediate Course.
+Name: (Full Name) WhatsApp: (WhatsApp Number) Email: (Email ID) Classes Selected: (Class Interests)
+The full form response is available in the Google Sheet: NSM Website - Form Responses > Intermediate
+3. After successful submission, show a confirmation modal with the text: “Thank you for filling out the form! Our course advisor will get in touch with you shortly.” When the user clicks OK, redirect them back to the Intermediate Course landing page.
+
+🧾 Form Content (exact wording)
+Personal Details
+* Full Name (Text field)
+* Email ID (Email field)
+* WhatsApp Number (Phone input with dropdown of all country codes)
+* City (Text field)
+* Country (Text field)
+Who are you signing up for? (Single choice - radio buttons) Please tell us who you’re filling out this form for, so we can tailor the course details accordingly.
+* Myself
+* My child
+* A friend or family member
+What are your learning goals? (Multiple-choice - checkboxes) Tell us about your goals or what you hope to achieve through a semester at our school.
+* Improve my piano technique
+* Grow as a musician
+* Learn to play my favourite songs
+* Understand how music works
+* Become a professional artist
+* Learn to teach music
+Preferred Genre of Study (Multiple-choice - checkboxes) Which style or genre of music would you like to focus on in your learning?
+* Bollywood
+* Regional
+* Western Classical
+* Jazz Standards
+* Root Genres (Blues, Folk, etc.)
+* Pop
+* Rock
+* Gospel
+* Surprise me!
+Music Background (Single choice - radio buttons) Which of the following best describes where you are in your musical journey?
+* Beginner - Intermediate (1–3 years of experience)
+* Seasoned Musician (Recording or Performing Experience)
+* Music Producer
+* Music Educator
+Piano Experience (Multiple-choice - checkboxes) How do you usually play or use the piano in your musical activities?
+* Singer who accompanies myself
+* Church Musician
+* Play in a Band
+* Music Producer and record in a DAW as a producer/arranger
+* Have studied classical piano from Trinity/ABRSM
+* Self Taught Pianist
+* Other (Short text field for custom input)
+Class Interests (Multiple-choice - checkboxes with visible descriptions) Which of these classes would you be most interested in joining? Please go through the descriptions before selecting your choice.
+Make sure the descriptions are clearly visible and mobile-friendly. Use collapsible or expandable cards if needed.
+Modular Piano — Each module focuses on a specific topic, song, or genre, explored over 2–3 lessons. (60-minute session) Theory & Ear Training — Held on alternate weekends, this 60-minute class covers theoretical concepts, improvisation, ear training, rhythm practice and staff notation. Music Gym — Held on alternate weekends, this 45-minute class focuses on practical piano workouts - chords, scales, and improvisation - to build rhythm, technique, hand independence and ear training for complete “3D” playing. Music Factory — This 90-minute session helps students learn to transcribe music purely by ear from full songs to key sections like riffs and hooks. Develops listening, analysis, and transcription skills.
+Preferred Call Time (Short text field) Thank you for filling out the form! Our course advisor will get in touch with you soon. When would be a convenient time for us to call you? Our working hours are Monday to Saturday, 10:30 AM to 5:30 PM (IST). These timings should automatically adjust based on the user’s geolocation and daylight savings.
+
+🧠 Technical Notes
+* Use Next.js + Tailwind + JavaScript (or React) according to the current project setup.
+* Integrate Resend and Google Sheets API using account secrets.
+* Validate inputs section by section with inline error messages.
+* Include autosave, loading indicator, and confirmation modal.
+* Maintain a clean, compact, and consistent layout with the existing page design.
