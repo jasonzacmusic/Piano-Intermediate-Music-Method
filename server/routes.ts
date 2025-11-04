@@ -1,6 +1,104 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { google } from "googleapis";
+import { Resend } from "resend";
+import { courseBuilderFormSchema, type CourseBuilderForm } from "@shared/schema";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function saveToGoogleSheets(data: CourseBuilderForm) {
+  try {
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      },
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1GlVEfh-eQI2Y6C69WFH1T7Vm2RM6uaWMT3XhF6_Ct-E';
+
+    const row = [
+      new Date().toISOString(),
+      data.name,
+      data.email,
+      `${data.countryCode} ${data.phone}`,
+      data.signupFor,
+      data.childAge || '',
+      data.learningGoals.join(', '),
+      data.preferredGenre.join(', '),
+      data.musicBackground,
+      data.pianoExperience,
+      data.classInterests.join(', '),
+      data.preferredCallTime,
+      data.additionalNotes || '',
+    ];
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: 'Sheet1!A:M',
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [row],
+      },
+    });
+
+    console.log('[COURSE-BUILDER] Successfully saved to Google Sheets');
+  } catch (error) {
+    console.error('[COURSE-BUILDER] Google Sheets error:', error);
+    throw new Error('Failed to save to Google Sheets');
+  }
+}
+
+async function sendEmailNotifications(data: CourseBuilderForm) {
+  try {
+    const adminEmailHtml = `
+      <h2>New Course Builder Submission</h2>
+      <p><strong>Name:</strong> ${data.name}</p>
+      <p><strong>Email:</strong> ${data.email}</p>
+      <p><strong>Phone:</strong> ${data.countryCode} ${data.phone}</p>
+      <p><strong>Signing up for:</strong> ${data.signupFor}</p>
+      ${data.childAge ? `<p><strong>Child's Age:</strong> ${data.childAge}</p>` : ''}
+      <p><strong>Learning Goals:</strong> ${data.learningGoals.join(', ')}</p>
+      <p><strong>Preferred Genre:</strong> ${data.preferredGenre.join(', ')}</p>
+      <p><strong>Music Background:</strong> ${data.musicBackground}</p>
+      <p><strong>Piano Experience:</strong> ${data.pianoExperience}</p>
+      <p><strong>Class Interests:</strong> ${data.classInterests.join(', ')}</p>
+      <p><strong>Preferred Call Time:</strong> ${data.preferredCallTime}</p>
+      ${data.additionalNotes ? `<p><strong>Additional Notes:</strong> ${data.additionalNotes}</p>` : ''}
+    `;
+
+    const userEmailHtml = `
+      <h2>Thank you for your interest in Nathaniel School of Music!</h2>
+      <p>Dear ${data.name},</p>
+      <p>We've received your course preferences and our team will contact you shortly at ${data.countryCode} ${data.phone} during your preferred time: ${data.preferredCallTime}.</p>
+      <p>In the meantime, feel free to explore our YouTube channel for free tutorials and teaching demonstrations.</p>
+      <p>Best regards,<br/>Nathaniel School of Music Team</p>
+    `;
+
+    await Promise.all([
+      resend.emails.send({
+        from: 'NSM Course Builder <onboarding@resend.dev>',
+        to: ['music@nathanielschool.com'],
+        subject: `New Course Builder: ${data.name}`,
+        html: adminEmailHtml,
+      }),
+      resend.emails.send({
+        from: 'Nathaniel School of Music <onboarding@resend.dev>',
+        to: [data.email],
+        subject: 'Your Course Preferences - Nathaniel School of Music',
+        html: userEmailHtml,
+      }),
+    ]);
+
+    console.log('[COURSE-BUILDER] Successfully sent email notifications');
+  } catch (error) {
+    console.error('[COURSE-BUILDER] Email error:', error);
+    throw new Error('Failed to send email notifications');
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/geo", async (req: Request, res) => {
@@ -69,6 +167,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         country: "US",
         region: "international"
+      });
+    }
+  });
+
+  app.post("/api/course-builder", async (req: Request, res) => {
+    try {
+      const validatedData = courseBuilderFormSchema.parse(req.body);
+
+      await Promise.all([
+        saveToGoogleSheets(validatedData),
+        sendEmailNotifications(validatedData),
+      ]);
+
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error('[COURSE-BUILDER] Error:', error);
+      res.status(400).json({ 
+        error: error.message || "Failed to process form submission" 
       });
     }
   });
