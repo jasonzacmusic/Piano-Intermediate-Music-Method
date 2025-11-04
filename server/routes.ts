@@ -94,16 +94,18 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
 
     const [adminResult, userResult] = await Promise.all([
       resend.emails.send({
-        from: 'Nathaniel School of Music <music@nathanielschool.com>',
+        from: 'Nathaniel School of Music <onboarding@resend.dev>',
         to: ['music@nathanielschool.com'],
         subject: `New Intermediate Course Enquiry`,
         html: adminEmailHtml,
+        reply_to: 'music@nathanielschool.com',
       }),
       resend.emails.send({
-        from: 'Nathaniel School of Music <music@nathanielschool.com>',
+        from: 'Nathaniel School of Music <onboarding@resend.dev>',
         to: [data.email],
         subject: 'Thank you for reaching out to Nathaniel School of Music',
         html: userEmailHtml,
+        reply_to: 'music@nathanielschool.com',
       }),
     ]);
 
