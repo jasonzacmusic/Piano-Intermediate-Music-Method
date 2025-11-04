@@ -1,7 +1,7 @@
 {
   "hero": {
-    "headline": "Learn Piano the Right Way : From Beginner to Performer in 6 Months",
-    "subheadline": "Structured. Practical. Performance-based. For all ages.",
+    "headline": "Grow as a Musician. The Piano Becomes a Byproduct.",
+    "subheadline": "Intermediate & Advanced Piano Program – Where Theory, Ear Training, Transcription & Rhythm Shape Complete Musicians, Not Just Players.",
     "buttons": {
       "primary": {
         "text": "",
@@ -13,10 +13,10 @@
       }
     },
     "trust": [
-      "Live Online",
-      "Hybrid (Bangalore)",
+      "Flexible Time Zones",
+      "32/40/50/65 Hour Packages",
       "Graded Certificate",
-      "Assignments & Feedback"
+      "HD Recordings + Notes"
     ],
     "heroImage": "/images/060A0073.jpg"
   },
@@ -132,10 +132,10 @@
   },
 
   "coursePreview": {
-    "title": "Get a Detailed Look at What's Covered in the Course",
-    "subtitle": "A Complete Overview of Topics, Exercises, and Learning Goals",
+    "title": "How Our Intermediate & Advanced Piano Program Works",
+    "subtitle": "Four Classroom Types, One Goal: Complete Musicianship",
     "videoUrl": "https://www.youtube.com/watch?v=XRCsDqzzNI4",
-    "description": "In this video, our faculty explains the Piano Foundation Course in detail. Whether you prefer group classes or private lessons, online or offline, this course is designed for anyone who want a structured, hands-on approach to learning piano."
+    "description": "In this video, Jason explains our unique approach to intermediate and advanced piano training. We focus on growing you as a musician first – through theory, ear training, transcription, rhythm, and notation. Piano skills naturally follow. You'll learn everything by ear, bring your own songs to transcribe, and work across four specialized classrooms: Modular Piano (topic-focused lessons), Music Gym (3D exercises), Theory & Ear Training (notation and rhythm theory), and Music Factory (our signature deep transcription class). This isn't a hobby course – it's a graded certificate program with weekly homework, personalized feedback, and HD recordings of every lesson. Choose from flexible time zones and 32/40/50/65 hour packages over a 6-month semester. No age cap. For students who want to become musicians."
   },
 
   "whoIsFor": [
@@ -225,52 +225,52 @@
 
   "faq": [
     {
-      "question": "Do I need my own keyboard?",
-      "answer": "Yes. You'll need a keyboard or piano at home to practice between lessons. We recommend a full-size (61-88 keys) touch-sensitive keyboard to get the most realistic playing experience. Our team can guide you with recommendations if you're looking to buy one."
+      "question": "Who is this program for?",
+      "answer": "This is for intermediate and advanced piano students who want to grow as complete musicians. Whether you've studied classical piano (Trinity/ABRSM), are a self-taught player, or have completed foundation-level training elsewhere – if you want to understand music theory by ear, transcribe songs, master rhythm, and go deeper than just playing notes, this program is for you. No age cap. We've trained students from teenagers to 75+."
     },
     {
-      "question": "Is this only for beginners?",
-      "answer": "Not at all! While the Foundation Course is perfect for beginners, it's also designed for students from Trinity/ABRSM or self-taught musicians who want to build stronger rhythmic, harmonic, and real-world playing skills. Many intermediate players join to \"fill the gaps\" and strengthen their fundamentals."
+      "question": "What makes this different from other piano courses?",
+      "answer": "We focus on growing you as a musician first – the piano becomes a byproduct. Instead of just memorizing scales and chords, you'll learn everything by ear. You'll know the sixth of Bb major is G, hear it's a major sixth, and understand how it relates to surrounding notes – all applied to real songs. We use four specialized classrooms: Modular Piano (focused topic lessons), Music Gym (3D exercises for ears, technique, theory), Theory & Ear Training (notation and rhythm theory), and Music Factory (deep transcription analysis). This is serious music education, not a hobby course."
+    },
+    {
+      "question": "What is Music Factory and why is it so important?",
+      "answer": "Music Factory is our signature transcription class and the most popular among students. You'll set a goal to learn a song, then transcribe every aspect by ear – notation, chord progressions, rhythm patterns, phrase structure. You'll understand WHY the composer chose each chord, not just WHAT they played. Once you understand the entirety of the song, you can then play it. Or you might just enjoy having analyzed a great piece of music. This develops deep listening, analysis, and transcription skills that make you a true musician."
+    },
+    {
+      "question": "Can I bring my own songs to learn?",
+      "answer": "Absolutely! In fact, we encourage it. You bring your favorite songs to class, and we transcribe them together. Whether it's a Bollywood track, a jazz standard, gospel, pop, or classical piece – you'll learn to analyze and play music that matters to you. This makes the learning experience personal and relevant."
+    },
+    {
+      "question": "How do the class timings work for different time zones?",
+      "answer": "We offer flexible scheduling across time zones: weekday early mornings, evenings after office hours, and weekend slots (Saturdays and Sundays). You can choose what works best for your schedule. We have students joining from all over the world – India, Singapore, Europe, U.S. – learning at their convenience."
     },
     {
       "question": "What if I miss a class?",
-      "answer": "Every live session is recorded in HD and shared privately with you. You'll also receive assignments and feedback through our system so you never fall behind. You can even review topics anytime using our dedicated Video Courses section on nathanielschool.com."
+      "answer": "Don't worry. Every live session is recorded in HD (almost the same quality as our YouTube videos) and shared privately with you. You'll also receive Jason's handwritten notes, notation, supplementary resources, and practice tracks for every lesson. You can attend live and use the recording for revision, or catch up if you miss a session due to a hectic schedule."
     },
     {
-      "question": "What age group is this for?",
-      "answer": "We've trained students from age 7 to 75+! The course is structured to adapt to each learner's goals and pace. It's never too early or too late to start learning music."
+      "question": "Is this a graded course? Will there be homework?",
+      "answer": "Yes, this is a serious graded certificate program. You'll have weekly homework and assignments. You'll send them to Jason, who will listen, provide personalized feedback, and grade your work. This isn't for hobbyists – it's for students who want to become musicians at any age. By the end of the semester, you'll receive a graded certificate from Nathaniel School of Music."
     },
     {
-      "question": "Can I learn from outside India?",
-      "answer": "Yes! Our classes are time-zone friendly and available live online or in hybrid mode (live + recordings). We have students joining from all over the world, from Singapore to the U.S., learning at their convenience."
+      "question": "What are the different package options?",
+      "answer": "You can choose from 32, 40, 50, or 65-hour packages over a 6-month semester. We bill simply by the number of hours. Pick the package that suits your learning goals and time commitment. All packages include live classes, HD recordings, handwritten notes, notation, supplementary resources, and practice tracks."
     },
     {
-      "question": "Do I get a certificate after completing the course?",
-      "answer": "Yes. You'll receive a graded performance-based certificate from the Nathaniel School of Music after completing your semester. It reflects your progress in technique, theory, rhythm, and performance."
+      "question": "What's the difference between Modular Piano, Music Gym, Theory & Ear Training, and Music Factory?",
+      "answer": "Modular Piano consists of 2-4 lesson modules focused on specific topics: singing & playing, chord inversions, gospel music, seasonal songs (like Christmas carols). Music Gym offers dedicated 3D exercises to build your ears, technique, and theory with structured practice. Theory & Ear Training classes cover notation, ear training, improvisation, rhythm practice, and staff notation – including rhythm theory, which is often missing from music education. Music Factory is our deep transcription class where you analyze entire songs from notation to chord logic to rhythm structure."
     },
     {
-      "question": "How much time should I practice every week?",
-      "answer": "We recommend at least 30 minutes a day or 3–4 hours a week to see steady progress. Each class includes practical exercises, chord work, and rhythm drills that you can build upon at home."
+      "question": "Do I need prior piano experience?",
+      "answer": "Yes. This is an intermediate/advanced program, not for absolute beginners. You should be comfortable with basic piano playing, know some chords and scales, and be ready to dive into theory, ear training, and transcription at a deeper level. If you're a foundation graduate, self-taught, or have studied classical piano and want to understand the 'why' behind music, this is perfect for you."
     },
     {
-      "question": "Can I continue learning after the Foundation Course?",
-      "answer": "Absolutely. You can move into our advanced Music Method modules where you'll learn performance repertoire, improvisation, and stage collaboration with other musicians."
+      "question": "Do you cover rhythm theory?",
+      "answer": "Yes! Unlike most courses, we teach rhythm as theory – a complete system often missing from music education. You'll learn Konnakol (South Indian rhythmic patterns), Afro-Cuban rhythms, complex metres (7/8, 5/8), irregular groupings, and syncopation. Rhythm is treated as seriously as harmony and melody."
     },
     {
-      "question": "What styles of music will I learn?",
-      "answer": "You'll explore Blues, Gospel, Pop, Rock, Bollywood, and Indian Ragas, so you can perform in multiple styles confidently. Each concept is linked to real songs and rhythm patterns for practical use."
-    },
-    {
-      "question": "Will I get to showcase my performance somewhere?",
-      "answer": "Yes! We organize jamming sessions and bootcamps where students get the chance to perform in front of others. We also feature our students' performances on our Instagram page. You can check out some of these performances here: https://www.instagram.com/nathanielschool/"
-    },
-    {
-      "question": "Do I get a demo session before enrolling or joining the class?",
-      "answer": "We don't offer free demo sessions before enrollment. However, you can explore our teaching style and class structure from our YouTube channel - https://www.youtube.com/channel/UCCI37YB3l21oq_sLoc92YfA?sub_confirmation=1 or the free tutorials on our website - https://www.nathanielschool.com/free-tutorials. These will give you a good idea of what our classes are like and the kind of learning experience you can expect."
-    },
-    {
-      "question": "What's the learning approach in the Piano Foundation Course?",
-      "answer": "We start from the absolute fundamentals, from understanding the piano keys to correct posture. From the very first class, students learn to play with both hands. Our lessons are not limited to one genre or key. Students explore a variety of musical styles and practice in different keys, helping them become versatile pianists. By the end of the course, every student is trained to perform both as a solo pianist and as an accompanist. We also encourage students to suggest songs they would like to learn, making the experience more personal and relevant."
+      "question": "Do I get a demo session before enrolling?",
+      "answer": "We don't offer free demo sessions before enrollment. However, you can explore Jason's teaching style from our YouTube channel (https://www.youtube.com/channel/UCCI37YB3l21oq_sLoc92YfA?sub_confirmation=1) or the free tutorials on our website (https://www.nathanielschool.com/free-tutorials). These will give you a clear idea of the quality and depth of our teaching."
     }
   ],
 
