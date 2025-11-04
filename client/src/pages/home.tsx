@@ -19,10 +19,12 @@ import { FAQSection } from "@/components/sections/faq-section";
 import { SEOSection } from "@/components/sections/seo-section";
 import { Footer } from "@/components/sections/footer";
 import { StructuredData } from "@/components/structured-data";
+import { CourseBuilderFormModal } from "@/components/course-builder-form";
 import landingData from "../../../content/landing.json";
 
 export default function Home() {
   const [userRegion, setUserRegion] = useState<"domestic" | "international" | null>(null);
+  const [isCourseBuilderOpen, setIsCourseBuilderOpen] = useState(false);
 
   // A/B Testing
   const heroHeadlineTest = useABTest(AB_TESTS.HERO_HEADLINE);
@@ -83,6 +85,11 @@ export default function Home() {
     trackABTestConversion(AB_TESTS.PRIMARY_CTA.testId, primaryCTATest.variantId, 'enrollment_click');
   };
 
+  const handleBuildCourseClick = () => {
+    setIsCourseBuilderOpen(true);
+    handleEnrollmentClick();
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground scroll-smooth">
       <StructuredData />
@@ -90,7 +97,12 @@ export default function Home() {
       
       <HeroSection 
         data={heroData} 
-        onEnrollClick={handleEnrollmentClick}
+        onBuildCourseClick={handleBuildCourseClick}
+      />
+      
+      <CourseBuilderFormModal 
+        isOpen={isCourseBuilderOpen}
+        onClose={() => setIsCourseBuilderOpen(false)}
       />
       
       <CoursePreviewSection data={landingData.coursePreview} />

@@ -1,5 +1,6 @@
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 interface HeroProps {
   data: {
@@ -12,10 +13,10 @@ interface HeroProps {
     trust: string[];
     heroImage: string;
   };
-  onEnrollClick?: () => void;
+  onBuildCourseClick?: () => void;
 }
 
-export function HeroSection({ data, onEnrollClick }: HeroProps) {
+export function HeroSection({ data, onBuildCourseClick }: HeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden mt-20 md:mt-24">
       <div 
@@ -56,6 +57,22 @@ export function HeroSection({ data, onEnrollClick }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="pt-4"
+          >
+            <Button
+              size="lg"
+              className="text-lg px-8 py-6"
+              onClick={onBuildCourseClick}
+              data-testid="button-build-course"
+            >
+              Build Your Course
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-wrap gap-4 md:gap-6 justify-center items-center"
           >
             {data.trust.map((item, index) => (
