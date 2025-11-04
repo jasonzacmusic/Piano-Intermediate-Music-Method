@@ -26,27 +26,27 @@ async function saveToGoogleSheets(data: CourseBuilderForm) {
     });
 
     const sheets = google.sheets({ version: 'v4', auth });
-    const spreadsheetId = '1GlVEfh-eQI2Y6C69WFH1T7Vm2RM6uaWMT3XhF6_Ct-E';
+    const spreadsheetId = '16BNZdshYZC-SeG2Yar1pzM1ggQu2k9Y73U_CGlCYDck';
 
     const row = [
       new Date().toISOString(),
       data.name,
       data.email,
-      `${data.countryCode} ${data.phone}`,
+      `${data.countryCode} ${data.whatsappNumber}`,
+      data.city,
+      data.country,
       data.signupFor,
-      data.childAge || '',
       data.learningGoals.join(', '),
       data.preferredGenre.join(', '),
       data.musicBackground,
-      data.pianoExperience,
+      data.pianoExperience.join(', ') + (data.pianoExperienceOther ? ` - ${data.pianoExperienceOther}` : ''),
       data.classInterests.join(', '),
       data.preferredCallTime,
-      data.additionalNotes || '',
     ];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:M',
+      range: 'Intermediate!A:M',
       valueInputOption: 'RAW',
       requestBody: {
         values: [row],
@@ -62,41 +62,43 @@ async function saveToGoogleSheets(data: CourseBuilderForm) {
 
 async function sendEmailNotifications(data: CourseBuilderForm) {
   try {
+    const firstName = data.name.split(' ')[0];
+
     const adminEmailHtml = `
-      <h2>New Course Builder Submission</h2>
+      <p>A new enquiry has been submitted for the Intermediate Course.</p>
       <p><strong>Name:</strong> ${data.name}</p>
+      <p><strong>WhatsApp:</strong> ${data.countryCode} ${data.whatsappNumber}</p>
       <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Phone:</strong> ${data.countryCode} ${data.phone}</p>
-      <p><strong>Signing up for:</strong> ${data.signupFor}</p>
-      ${data.childAge ? `<p><strong>Child's Age:</strong> ${data.childAge}</p>` : ''}
-      <p><strong>Learning Goals:</strong> ${data.learningGoals.join(', ')}</p>
-      <p><strong>Preferred Genre:</strong> ${data.preferredGenre.join(', ')}</p>
-      <p><strong>Music Background:</strong> ${data.musicBackground}</p>
-      <p><strong>Piano Experience:</strong> ${data.pianoExperience}</p>
-      <p><strong>Class Interests:</strong> ${data.classInterests.join(', ')}</p>
-      <p><strong>Preferred Call Time:</strong> ${data.preferredCallTime}</p>
-      ${data.additionalNotes ? `<p><strong>Additional Notes:</strong> ${data.additionalNotes}</p>` : ''}
+      <p><strong>Classes Selected:</strong> ${data.classInterests.join(', ')}</p>
+      <p>The full form response is available in the Google Sheet: NSM Website - Form Responses &gt; Intermediate</p>
     `;
 
     const userEmailHtml = `
-      <h2>Thank you for your interest in Nathaniel School of Music!</h2>
-      <p>Dear ${data.name},</p>
-      <p>We've received your course preferences and our team will contact you shortly at ${data.countryCode} ${data.phone} during your preferred time: ${data.preferredCallTime}.</p>
-      <p>In the meantime, feel free to explore our YouTube channel for free tutorials and teaching demonstrations.</p>
-      <p>Best regards,<br/>Nathaniel School of Music Team</p>
+      <p>Hi ${firstName},</p>
+      <p>Thank you for filling out the form! We've received your details and our team will reach out to you shortly via WhatsApp or phone at ${data.countryCode} ${data.whatsappNumber}.</p>
+      <h3>What's Next?</h3>
+      <ul>
+        <li>Our team will contact you within 24 hours</li>
+        <li>We'll discuss the course structure and answer any questions</li>
+        <li>You can choose between Online, Offline (Bangalore), or Hybrid modes</li>
+      </ul>
+      <p>If you have any immediate questions, feel free to reach out to us:</p>
+      <p>Email: music@nathanielschool.com<br/>WhatsApp: +91 77604 56847</p>
+      <p>Looking forward to helping you begin your musical journey!</p>
+      <p>— Nathaniel School of Music</p>
     `;
 
     await Promise.all([
       resend.emails.send({
-        from: 'NSM Course Builder <onboarding@resend.dev>',
+        from: 'Nathaniel School of Music <onboarding@resend.dev>',
         to: ['music@nathanielschool.com'],
-        subject: `New Course Builder: ${data.name}`,
+        subject: `New Intermediate Course Enquiry`,
         html: adminEmailHtml,
       }),
       resend.emails.send({
         from: 'Nathaniel School of Music <onboarding@resend.dev>',
         to: [data.email],
-        subject: 'Your Course Preferences - Nathaniel School of Music',
+        subject: 'Thank you for reaching out to Nathaniel School of Music',
         html: userEmailHtml,
       }),
     ]);

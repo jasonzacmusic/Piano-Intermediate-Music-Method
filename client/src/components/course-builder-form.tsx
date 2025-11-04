@@ -18,6 +18,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -38,38 +39,53 @@ import { ChevronRight, ChevronLeft, Check, Loader2 } from "lucide-react";
 const AUTOSAVE_KEY = "nsm_course_builder_draft";
 
 const LEARNING_GOALS = [
-  "Play songs by ear",
-  "Read sheet music",
-  "Understand music theory",
-  "Improvise and compose",
-  "Prepare for exams",
-  "Performance skills",
+  "Improve my piano technique",
+  "Grow as a musician",
+  "Learn to play my favourite songs",
+  "Understand how music works",
+  "Become a professional artist",
+  "Learn to teach music",
 ];
 
 const GENRES = [
-  "Classical",
-  "Jazz",
-  "Pop/Rock",
-  "Gospel/Hymns",
-  "Film music",
-  "Indian classical",
-  "World music",
+  "Bollywood",
+  "Regional",
+  "Western Classical",
+  "Jazz Standards",
+  "Root Genres (Blues, Folk, etc.)",
+  "Pop",
+  "Rock",
+  "Gospel",
+  "Surprise me!",
 ];
 
-const CLASS_INTERESTS = [
-  "Piano technique",
-  "Music theory",
-  "Ear training",
-  "Rhythm & world music",
-  "Music Factory (transcription)",
-  "Music Gym (exercises)",
+const PIANO_EXPERIENCE_OPTIONS = [
+  "Singer who accompanies myself",
+  "Church Musician",
+  "Play in a Band",
+  "Music Producer and record in a DAW as a producer/arranger",
+  "Have studied classical piano from Trinity/ABRSM",
+  "Self Taught Pianist",
+  "Other",
 ];
 
-const CALL_TIMES = [
-  "Morning (8 AM - 12 PM IST)",
-  "Afternoon (12 PM - 5 PM IST)",
-  "Evening (5 PM - 9 PM IST)",
-  "Weekend only",
+const CLASS_OPTIONS = [
+  {
+    name: "Modular Piano",
+    description: "Each module focuses on a specific topic, song, or genre, explored over 2–3 lessons. (60-minute session)",
+  },
+  {
+    name: "Theory & Ear Training",
+    description: "Held on alternate weekends, this 60-minute class covers theoretical concepts, improvisation, ear training, rhythm practice and staff notation.",
+  },
+  {
+    name: "Music Gym",
+    description: "Held on alternate weekends, this 45-minute class focuses on practical piano workouts - chords, scales, and improvisation - to build rhythm, technique, hand independence and ear training for complete \"3D\" playing.",
+  },
+  {
+    name: "Music Factory",
+    description: "This 90-minute session helps students learn to transcribe music purely by ear from full songs to key sections like riffs and hooks. Develops listening, analysis, and transcription skills.",
+  },
 ];
 
 const COUNTRY_CODES = [
@@ -105,17 +121,18 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
     defaultValues: {
       name: "",
       email: "",
-      phone: "",
-      countryCode: "+91",
-      signupFor: "self",
-      childAge: "",
+      whatsappNumber: "",
+      countryCode: "",
+      city: "",
+      country: "",
+      signupFor: undefined,
       learningGoals: [],
       preferredGenre: [],
       musicBackground: undefined,
-      pianoExperience: undefined,
+      pianoExperience: [],
+      pianoExperienceOther: "",
       classInterests: [],
       preferredCallTime: "",
-      additionalNotes: "",
     },
   });
 
@@ -126,7 +143,7 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
     onSuccess: () => {
       toast({
         title: "Success!",
-        description: "Your course preferences have been submitted. We'll contact you soon!",
+        description: "Thank you for filling out the form! Our course advisor will get in touch with you shortly.",
       });
       localStorage.removeItem(AUTOSAVE_KEY);
       form.reset();
@@ -165,15 +182,26 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
     }
   }, [form, isOpen]);
 
-  const totalSteps = 7;
+  const totalSteps = 8;
   const progress = (step / totalSteps) * 100;
+
+  const stepNames = [
+    "Personal Details",
+    "Who are you signing up for?",
+    "What are your learning goals?",
+    "Preferred Genre of Study",
+    "Music Background",
+    "Piano Experience",
+    "Class Interests",
+    "Preferred Call Time",
+  ];
 
   const validateStep = async (currentStep: number): Promise<boolean> => {
     let fieldsToValidate: (keyof CourseBuilderForm)[] = [];
 
     switch (currentStep) {
       case 1:
-        fieldsToValidate = ["name", "email", "phone", "countryCode"];
+        fieldsToValidate = ["name", "email", "whatsappNumber", "countryCode", "city", "country"];
         break;
       case 2:
         fieldsToValidate = ["signupFor"];
@@ -185,12 +213,15 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
         fieldsToValidate = ["preferredGenre"];
         break;
       case 5:
-        fieldsToValidate = ["musicBackground", "pianoExperience"];
+        fieldsToValidate = ["musicBackground"];
         break;
       case 6:
-        fieldsToValidate = ["classInterests"];
+        fieldsToValidate = ["pianoExperience"];
         break;
       case 7:
+        fieldsToValidate = ["classInterests"];
+        break;
+      case 8:
         fieldsToValidate = ["preferredCallTime"];
         break;
     }
@@ -216,7 +247,7 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
     submitMutation.mutate(data);
   };
 
-  const signupFor = form.watch("signupFor");
+  const pianoExperience = form.watch("pianoExperience");
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -224,7 +255,7 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
         <DialogHeader>
           <DialogTitle className="text-2xl">Build Your Course</DialogTitle>
           <DialogDescription>
-            Step {step} of {totalSteps}: Customize your learning journey
+            Step {step} of {totalSteps}: {stepNames[step - 1]}
           </DialogDescription>
         </DialogHeader>
 
@@ -259,7 +290,7 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email Address</FormLabel>
+                      <FormLabel>Email ID</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -290,11 +321,11 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                               field.onChange(value);
                             }
                           }}
-                          value={showCustomCountryCode ? "custom" : field.value}
+                          value={showCustomCountryCode ? "custom" : field.value || ""}
                         >
                           <FormControl>
                             <SelectTrigger data-testid="select-country-code">
-                              <SelectValue placeholder="Code" />
+                              <SelectValue placeholder="Select" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -321,15 +352,15 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
 
                   <FormField
                     control={form.control}
-                    name="phone"
+                    name="whatsappNumber"
                     render={({ field }) => (
                       <FormItem className="col-span-2">
-                        <FormLabel>Phone / WhatsApp</FormLabel>
+                        <FormLabel>WhatsApp Number</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="Phone number"
-                            data-testid="input-phone"
+                            placeholder="WhatsApp number"
+                            data-testid="input-whatsapp"
                           />
                         </FormControl>
                         <FormMessage />
@@ -337,12 +368,51 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                     )}
                   />
                 </div>
+
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>City</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter your city"
+                          data-testid="input-city"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Country</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Enter your country"
+                          data-testid="input-country"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             )}
 
             {step === 2 && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Who are you signing up for?</h3>
+                <p className="text-sm text-muted-foreground">
+                  Please tell us who you're filling out this form for, so we can tailor the course details accordingly.
+                </p>
 
                 <FormField
                   control={form.control}
@@ -357,11 +427,11 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                         >
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem
-                              value="self"
-                              id="self"
-                              data-testid="radio-signup-self"
+                              value="myself"
+                              id="myself"
+                              data-testid="radio-signup-myself"
                             />
-                            <label htmlFor="self" className="cursor-pointer">
+                            <label htmlFor="myself" className="cursor-pointer">
                               Myself
                             </label>
                           </div>
@@ -377,12 +447,12 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                           </div>
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem
-                              value="other"
-                              id="other"
-                              data-testid="radio-signup-other"
+                              value="friend_family"
+                              id="friend_family"
+                              data-testid="radio-signup-friend"
                             />
-                            <label htmlFor="other" className="cursor-pointer">
-                              Someone else
+                            <label htmlFor="friend_family" className="cursor-pointer">
+                              A friend or family member
                             </label>
                           </div>
                         </RadioGroup>
@@ -391,33 +461,15 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
                     </FormItem>
                   )}
                 />
-
-                {signupFor === "child" && (
-                  <FormField
-                    control={form.control}
-                    name="childAge"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Child's Age</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="e.g., 8 years"
-                            data-testid="input-child-age"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
               </div>
             )}
 
             {step === 3 && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">What are your learning goals?</h3>
-                <p className="text-sm text-muted-foreground">Select all that apply</p>
+                <p className="text-sm text-muted-foreground">
+                  Tell us about your goals or what you hope to achieve through a semester at our school.
+                </p>
 
                 <FormField
                   control={form.control}
@@ -461,8 +513,10 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
 
             {step === 4 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Which genres interest you?</h3>
-                <p className="text-sm text-muted-foreground">Select all that apply</p>
+                <h3 className="text-lg font-semibold">Preferred Genre of Study</h3>
+                <p className="text-sm text-muted-foreground">
+                  Which style or genre of music would you like to focus on in your learning?
+                </p>
 
                 <FormField
                   control={form.control}
@@ -505,186 +559,181 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
             )}
 
             {step === 5 && (
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Music Background</h3>
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Music Background</h3>
+                <p className="text-sm text-muted-foreground">
+                  Which of the following best describes where you are in your musical journey?
+                </p>
 
-                  <FormField
-                    control={form.control}
-                    name="musicBackground"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            className="space-y-3"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="complete_beginner"
-                                id="complete_beginner"
-                                data-testid="radio-background-beginner"
-                              />
-                              <label htmlFor="complete_beginner" className="cursor-pointer">
-                                Complete beginner
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="some_lessons"
-                                id="some_lessons"
-                                data-testid="radio-background-some-lessons"
-                              />
-                              <label htmlFor="some_lessons" className="cursor-pointer">
-                                Taken some music lessons before
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="self_taught"
-                                id="self_taught"
-                                data-testid="radio-background-self-taught"
-                              />
-                              <label htmlFor="self_taught" className="cursor-pointer">
-                                Self-taught musician
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="intermediate"
-                                id="intermediate"
-                                data-testid="radio-background-intermediate"
-                              />
-                              <label htmlFor="intermediate" className="cursor-pointer">
-                                Intermediate (3-5 years experience)
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="advanced"
-                                id="advanced"
-                                data-testid="radio-background-advanced"
-                              />
-                              <label htmlFor="advanced" className="cursor-pointer">
-                                Advanced (5+ years, formal training)
-                              </label>
-                            </div>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Piano Experience</h3>
-
-                  <FormField
-                    control={form.control}
-                    name="pianoExperience"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            value={field.value}
-                            className="space-y-3"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="none"
-                                id="none"
-                                data-testid="radio-piano-none"
-                              />
-                              <label htmlFor="none" className="cursor-pointer">
-                                No piano experience
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="less_than_1"
-                                id="less_than_1"
-                                data-testid="radio-piano-less-1"
-                              />
-                              <label htmlFor="less_than_1" className="cursor-pointer">
-                                Less than 1 year
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="1_to_3"
-                                id="1_to_3"
-                                data-testid="radio-piano-1-3"
-                              />
-                              <label htmlFor="1_to_3" className="cursor-pointer">
-                                1-3 years
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="3_to_5"
-                                id="3_to_5"
-                                data-testid="radio-piano-3-5"
-                              />
-                              <label htmlFor="3_to_5" className="cursor-pointer">
-                                3-5 years
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem
-                                value="5_plus"
-                                id="5_plus"
-                                data-testid="radio-piano-5-plus"
-                              />
-                              <label htmlFor="5_plus" className="cursor-pointer">
-                                5+ years
-                              </label>
-                            </div>
-                          </RadioGroup>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="musicBackground"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          className="space-y-3"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                              value="beginner_intermediate"
+                              id="beginner_intermediate"
+                              data-testid="radio-background-beginner"
+                            />
+                            <label htmlFor="beginner_intermediate" className="cursor-pointer">
+                              Beginner - Intermediate (1–3 years of experience)
+                            </label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                              value="seasoned_musician"
+                              id="seasoned_musician"
+                              data-testid="radio-background-seasoned"
+                            />
+                            <label htmlFor="seasoned_musician" className="cursor-pointer">
+                              Seasoned Musician (Recording or Performing Experience)
+                            </label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                              value="music_producer"
+                              id="music_producer"
+                              data-testid="radio-background-producer"
+                            />
+                            <label htmlFor="music_producer" className="cursor-pointer">
+                              Music Producer
+                            </label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem
+                              value="music_educator"
+                              id="music_educator"
+                              data-testid="radio-background-educator"
+                            />
+                            <label htmlFor="music_educator" className="cursor-pointer">
+                              Music Educator
+                            </label>
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             )}
 
             {step === 6 && (
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Which classes interest you most?</h3>
-                <p className="text-sm text-muted-foreground">Select all that apply</p>
+                <h3 className="text-lg font-semibold">Piano Experience</h3>
+                <p className="text-sm text-muted-foreground">
+                  How do you usually play or use the piano in your musical activities?
+                </p>
+
+                <FormField
+                  control={form.control}
+                  name="pianoExperience"
+                  render={() => (
+                    <FormItem>
+                      <div className="space-y-3">
+                        {PIANO_EXPERIENCE_OPTIONS.map((option) => (
+                          <FormField
+                            key={option}
+                            control={form.control}
+                            name="pianoExperience"
+                            render={({ field }) => (
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(option)}
+                                    onCheckedChange={(checked) => {
+                                      const updated = checked
+                                        ? [...(field.value || []), option]
+                                        : field.value?.filter((v) => v !== option) || [];
+                                      field.onChange(updated);
+                                    }}
+                                    data-testid={`checkbox-piano-${option.toLowerCase().replace(/\s+/g, "-")}`}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal cursor-pointer">
+                                  {option}
+                                </FormLabel>
+                              </FormItem>
+                            )}
+                          />
+                        ))}
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {pianoExperience?.includes("Other") && (
+                  <FormField
+                    control={form.control}
+                    name="pianoExperienceOther"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Please specify</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Describe your piano experience"
+                            data-testid="input-piano-other"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+            )}
+
+            {step === 7 && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Class Interests</h3>
+                <p className="text-sm text-muted-foreground">
+                  Which of these classes would you be most interested in joining? Please go through the descriptions before selecting your choice.
+                </p>
 
                 <FormField
                   control={form.control}
                   name="classInterests"
                   render={() => (
                     <FormItem>
-                      <div className="space-y-3">
-                        {CLASS_INTERESTS.map((interest) => (
+                      <div className="space-y-4">
+                        {CLASS_OPTIONS.map((classOption) => (
                           <FormField
-                            key={interest}
+                            key={classOption.name}
                             control={form.control}
                             name="classInterests"
                             render={({ field }) => (
-                              <FormItem className="flex items-center space-x-3 space-y-0">
-                                <FormControl>
-                                  <Checkbox
-                                    checked={field.value?.includes(interest)}
-                                    onCheckedChange={(checked) => {
-                                      const updated = checked
-                                        ? [...(field.value || []), interest]
-                                        : field.value?.filter((v) => v !== interest) || [];
-                                      field.onChange(updated);
-                                    }}
-                                    data-testid={`checkbox-class-${interest.toLowerCase().replace(/\s+/g, "-")}`}
-                                  />
-                                </FormControl>
-                                <FormLabel className="font-normal cursor-pointer">
-                                  {interest}
-                                </FormLabel>
+                              <FormItem>
+                                <div className="flex items-start space-x-3 space-y-0 rounded-md border p-4">
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(classOption.name)}
+                                      onCheckedChange={(checked) => {
+                                        const updated = checked
+                                          ? [...(field.value || []), classOption.name]
+                                          : field.value?.filter((v) => v !== classOption.name) || [];
+                                        field.onChange(updated);
+                                      }}
+                                      data-testid={`checkbox-class-${classOption.name.toLowerCase().replace(/\s+/g, "-")}`}
+                                    />
+                                  </FormControl>
+                                  <div className="space-y-1">
+                                    <FormLabel className="font-semibold cursor-pointer">
+                                      {classOption.name}
+                                    </FormLabel>
+                                    <FormDescription className="text-sm">
+                                      {classOption.description}
+                                    </FormDescription>
+                                  </div>
+                                </div>
                               </FormItem>
                             )}
                           />
@@ -697,47 +746,25 @@ export function CourseBuilderFormModal({ isOpen, onClose }: CourseBuilderFormPro
               </div>
             )}
 
-            {step === 7 && (
+            {step === 8 && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold">Preferred Call Time</h3>
+                <p className="text-sm text-muted-foreground">
+                  Thank you for filling out the form! Our course advisor will get in touch with you soon. When would be a convenient time for us to call you? Our working hours are Monday to Saturday, 10:30 AM to 5:30 PM (IST).
+                </p>
 
                 <FormField
                   control={form.control}
                   name="preferredCallTime"
                   render={({ field }) => (
                     <FormItem>
-                      <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
-                          <SelectTrigger data-testid="select-call-time">
-                            <SelectValue placeholder="Select a time slot" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {CALL_TIMES.map((time) => (
-                            <SelectItem key={time} value={time}>
-                              {time}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="additionalNotes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Additional Notes (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          placeholder="Any specific questions or requirements?"
+                          placeholder="E.g., Weekdays after 2 PM or Saturdays morning"
                           className="resize-none"
-                          rows={4}
-                          data-testid="textarea-notes"
+                          rows={3}
+                          data-testid="textarea-call-time"
                         />
                       </FormControl>
                       <FormMessage />
