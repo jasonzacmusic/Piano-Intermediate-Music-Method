@@ -161,9 +161,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "MV"  // Maldives
       ];
 
-      const region = domesticCountries.includes(country.toUpperCase()) 
-        ? "domestic" 
-        : "international";
+      const europeanCountries = [
+        "GB", // United Kingdom
+        "DE", // Germany
+        "FR", // France
+        "IT", // Italy
+        "ES", // Spain
+        "NL", // Netherlands
+        "BE", // Belgium
+        "AT", // Austria
+        "CH", // Switzerland
+        "SE", // Sweden
+        "NO", // Norway
+        "DK", // Denmark
+        "FI", // Finland
+        "PT", // Portugal
+        "GR", // Greece
+        "IE", // Ireland
+        "PL", // Poland
+        "CZ", // Czech Republic
+        "RO", // Romania
+        "HU", // Hungary
+        "BG", // Bulgaria
+        "SK", // Slovakia
+        "HR", // Croatia
+        "SI", // Slovenia
+        "LT", // Lithuania
+        "LV", // Latvia
+        "EE", // Estonia
+        "LU", // Luxembourg
+        "MT", // Malta
+        "CY", // Cyprus
+      ];
+
+      let region: "domestic" | "europe" | "international";
+      if (domesticCountries.includes(country.toUpperCase())) {
+        region = "domestic";
+      } else if (europeanCountries.includes(country.toUpperCase())) {
+        region = "europe";
+      } else {
+        region = "international";
+      }
 
       console.log(`[GEO] Final result - Country: ${country}, Region: ${region}`);
 

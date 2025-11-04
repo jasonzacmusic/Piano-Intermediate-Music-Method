@@ -23,22 +23,22 @@ import { CourseBuilderFormModal } from "@/components/course-builder-form";
 import landingData from "../../../content/landing.json";
 
 export default function Home() {
-  const [userRegion, setUserRegion] = useState<"domestic" | "international" | null>(null);
+  const [userRegion, setUserRegion] = useState<"domestic" | "europe" | "international" | null>(null);
   const [isCourseBuilderOpen, setIsCourseBuilderOpen] = useState(false);
 
   // A/B Testing
   const heroHeadlineTest = useABTest(AB_TESTS.HERO_HEADLINE);
   const primaryCTATest = useABTest(AB_TESTS.PRIMARY_CTA);
 
-  const { data: geoData } = useQuery<{ country: string; region: "domestic" | "international" }>({
+  const { data: geoData } = useQuery<{ country: string; region: "domestic" | "europe" | "international" }>({
     queryKey: ["/api/geo"],
   });
 
   useEffect(() => {
     // Check for test override first (for team testing)
     const testRegion = localStorage.getItem('test_region');
-    if (testRegion === 'domestic' || testRegion === 'international') {
-      setUserRegion(testRegion);
+    if (testRegion === 'domestic' || testRegion === 'europe' || testRegion === 'international') {
+      setUserRegion(testRegion as "domestic" | "europe" | "international");
       return;
     }
     
@@ -124,7 +124,6 @@ export default function Home() {
       <TestimonialsSection data={landingData.testimonials} />
       
       <FeesSection 
-        data={landingData.fees} 
         userRegion={userRegion || "international"}
       />
       
