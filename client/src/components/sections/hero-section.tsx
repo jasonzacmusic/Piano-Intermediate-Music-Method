@@ -1,6 +1,7 @@
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ClassFlowchartSection } from "./class-flowchart-section";
 
 interface HeroProps {
   data: {
@@ -86,6 +87,10 @@ export function HeroSection({ data, onBuildCourseClick }: HeroProps) {
               </div>
             ))}
           </motion.div>
+        </div>
+
+        <div className="mt-16 md:mt-20">
+          <ClassFlowchartSection />
         </div>
       </div>
     </section>

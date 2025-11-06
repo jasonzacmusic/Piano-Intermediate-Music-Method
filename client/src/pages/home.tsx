@@ -10,7 +10,6 @@ import { StudentPhotosSection } from "@/components/sections/student-photos-secti
 import { SyllabusSection } from "@/components/sections/syllabus-section";
 import { CourseStructureSection } from "@/components/sections/course-structure-section";
 import { CoursePreviewSection } from "@/components/sections/course-preview-section";
-import { ClassFlowchartSection } from "@/components/sections/class-flowchart-section";
 import { FreeTutorialsSection } from "@/components/sections/free-tutorials-section";
 import { WhoIsForSection } from "@/components/sections/who-is-for-section";
 import { TeacherSection } from "@/components/sections/teacher-section";
@@ -107,8 +106,6 @@ export default function Home() {
       />
       
       <CoursePreviewSection data={landingData.coursePreview} />
-      
-      <ClassFlowchartSection />
       
       <FreeTutorialsSection />
       
