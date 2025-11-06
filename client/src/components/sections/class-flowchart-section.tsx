@@ -89,20 +89,20 @@ export function ClassFlowchartSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true }}
-          className="max-w-5xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
-          <Accordion type="multiple" className="space-y-4">
-            {classData.map((classItem, index) => {
+          <Accordion type="multiple" className="space-y-8 md:space-y-12">
+            {classData.map((classItem) => {
               const IconComponent = classItem.icon;
               return (
                 <AccordionItem
                   key={classItem.id}
                   value={classItem.id}
-                  className="border rounded-lg bg-card overflow-hidden"
+                  className="border-none"
                   data-testid={`accordion-${classItem.id}`}
                 >
                   <AccordionTrigger 
-                    className="px-4 md:px-6 py-4 hover:no-underline hover-elevate"
+                    className="border rounded-lg bg-card px-4 md:px-6 py-4 hover:no-underline hover-elevate mb-6"
                     data-testid={`button-expand-${classItem.id}`}
                   >
                     <div className="flex items-center gap-3 md:gap-4">
@@ -114,38 +114,100 @@ export function ClassFlowchartSection() {
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 md:px-6 pb-6">
-                    <div className="pt-4 flex flex-col items-center max-w-2xl mx-auto">
-                      {classItem.sessions.map((session, sessionIndex) => (
-                        <div key={sessionIndex} className="w-full">
+                  <AccordionContent>
+                    <div className="md:hidden flex flex-col gap-4 py-4">
+                      {classItem.sessions.map((session, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.08 }}
+                          data-testid={`session-${classItem.id}-${idx}`}
+                        >
+                          <div className="bg-muted/50 border-2 border-primary/40 rounded-full px-4 py-3 shadow-sm">
+                            <p className="text-center text-sm font-medium text-foreground">
+                              {session}
+                            </p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <div className="hidden md:flex justify-center py-12">
+                      <div className="relative w-full max-w-2xl aspect-square">
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                           <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: sessionIndex * 0.08 }}
-                            className="w-full"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.1 }}
+                            className="border-2 border-primary bg-card rounded-lg px-6 py-4 shadow-lg"
                           >
-                            <div 
-                              className="flex items-center gap-3 p-3 md:p-4 rounded-lg bg-muted/50 border-2 border-primary/30 shadow-sm"
-                              data-testid={`session-${classItem.id}-${sessionIndex}`}
-                            >
-                              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary">
-                                  {sessionIndex + 1}
-                                </span>
-                              </div>
-                              <span className="text-sm md:text-base font-medium text-foreground">
-                                {session}
+                            <div className="flex items-center gap-3">
+                              <IconComponent className="w-6 h-6 text-primary" />
+                              <span className="font-serif text-xl font-bold text-foreground whitespace-nowrap">
+                                {classItem.title}
                               </span>
                             </div>
                           </motion.div>
-                          
-                          {sessionIndex < classItem.sessions.length - 1 && (
-                            <div className="flex justify-center py-2">
-                              <ArrowDown className="w-5 h-5 text-primary/60" />
-                            </div>
-                          )}
                         </div>
-                      ))}
+
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        {classItem.sessions.map((_, idx) => {
+                          const total = classItem.sessions.length;
+                          const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
+                          const radius = 35;
+                          const centerX = 50;
+                          const centerY = 50;
+                          const endX = centerX + radius * Math.cos(angle);
+                          const endY = centerY + radius * Math.sin(angle);
+                          
+                          return (
+                            <line
+                              key={idx}
+                              x1={centerX}
+                              y1={centerY}
+                              x2={endX}
+                              y2={endY}
+                              stroke="hsl(var(--primary))"
+                              strokeWidth="0.4"
+                              opacity="0.4"
+                            />
+                          );
+                        })}
+                      </svg>
+
+                      {classItem.sessions.map((session, idx) => {
+                        const total = classItem.sessions.length;
+                        const angle = (idx / total) * 2 * Math.PI - Math.PI / 2;
+                        const radius = 35;
+                        const centerX = 50;
+                        const centerY = 50;
+                        const bubbleX = centerX + radius * Math.cos(angle);
+                        const bubbleY = centerY + radius * Math.sin(angle);
+                        
+                        return (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.2 + idx * 0.08 }}
+                            className="absolute"
+                            style={{
+                              left: `${bubbleX}%`,
+                              top: `${bubbleY}%`,
+                              transform: 'translate(-50%, -50%)',
+                            }}
+                            data-testid={`session-${classItem.id}-${idx}`}
+                          >
+                            <div className="bg-muted/50 border-2 border-primary/40 rounded-full px-4 py-3 shadow-sm whitespace-nowrap min-w-32 max-w-48">
+                              <p className="text-center text-sm font-medium text-foreground">
+                                {session}
+                              </p>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
