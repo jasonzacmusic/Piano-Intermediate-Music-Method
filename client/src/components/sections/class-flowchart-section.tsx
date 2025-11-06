@@ -67,6 +67,17 @@ export function ClassFlowchartSection() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        className="text-center mb-6 md:mb-8"
+      >
+        <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+          Click any class to see the sessions covered throughout the semester
+        </p>
+      </motion.div>
+
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
         <div className="grid grid-cols-2 gap-3 md:gap-4 lg:w-80 flex-shrink-0">
           {classData.map((classItem, idx) => {
