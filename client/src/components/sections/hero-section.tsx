@@ -55,19 +55,40 @@ export function HeroSection({ data, onBuildCourseClick }: HeroProps) {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="pt-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              duration: 0.6, 
+              delay: 0.2,
+              type: "spring",
+              stiffness: 200
+            }}
+            className="pt-6"
           >
-            <Button
-              size="lg"
-              className="text-lg px-8 py-6"
-              onClick={onBuildCourseClick}
-              data-testid="button-build-course"
+            <motion.div
+              animate={{ 
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
+              style={{
+                boxShadow: '0 0 30px rgba(147, 51, 234, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2)'
+              }}
+              className="inline-block rounded-md"
             >
-              Build Your Course
-            </Button>
+              <Button
+                size="lg"
+                className="text-lg md:text-xl font-bold shadow-2xl"
+                onClick={onBuildCourseClick}
+                data-testid="button-build-course"
+              >
+                Build Your Course
+              </Button>
+            </motion.div>
           </motion.div>
 
           <motion.div
