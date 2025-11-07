@@ -8,7 +8,6 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { USPSection } from "@/components/sections/usp-section";
 import { StudentPhotosSection } from "@/components/sections/student-photos-section";
 import { SyllabusSection } from "@/components/sections/syllabus-section";
-import { CourseStructureSection } from "@/components/sections/course-structure-section";
 import { CoursePreviewSection } from "@/components/sections/course-preview-section";
 import { FreeTutorialsSection } from "@/components/sections/free-tutorials-section";
 import { WhoIsForSection } from "@/components/sections/who-is-for-section";
@@ -114,8 +113,6 @@ export default function Home() {
       <StudentPhotosSection />
       
       <SyllabusSection data={landingData.syllabus} />
-      
-      <CourseStructureSection data={landingData.structure} />
       
       <WhoIsForSection data={landingData.whoIsFor} />
       

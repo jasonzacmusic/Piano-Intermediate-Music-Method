@@ -76,13 +76,13 @@ export function HeroSection({ data, onBuildCourseClick }: HeroProps) {
                 ease: "easeInOut"
               }}
               style={{
-                boxShadow: '0 0 30px rgba(147, 51, 234, 0.4), 0 10px 40px rgba(0, 0, 0, 0.2)'
+                boxShadow: '0 0 40px rgba(147, 51, 234, 0.5), 0 15px 50px rgba(0, 0, 0, 0.3)'
               }}
-              className="inline-block rounded-md"
+              className="inline-block rounded-lg"
             >
               <Button
                 size="lg"
-                className="text-lg md:text-xl font-bold shadow-2xl"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold shadow-2xl px-8 md:px-12 lg:px-16 py-6 md:py-8 lg:py-10 min-h-[80px] md:min-h-[100px] lg:min-h-[120px]"
                 onClick={onBuildCourseClick}
                 data-testid="button-build-course"
               >
