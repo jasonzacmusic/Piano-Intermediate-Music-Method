@@ -95,16 +95,16 @@ export function ClassFlowchartSection() {
                 animate={{ 
                   opacity: 1, 
                   scale: 1,
-                  rotateY: 0
+                  rotateY: 0,
+                  y: 0
                 }}
                 whileHover={{ 
-                  scale: 1.12, 
-                  y: -8,
-                  rotateZ: 2,
+                  scale: 1.08, 
+                  y: -6,
                   transition: { duration: 0.2 }
                 }}
                 whileTap={{ 
-                  scale: 0.95,
+                  scale: 0.96,
                   transition: { duration: 0.1 }
                 }}
                 transition={{ 
@@ -115,12 +115,12 @@ export function ClassFlowchartSection() {
                 }}
                 onClick={() => setSelectedClass(isSelected ? null : classItem.id)}
                 className={`
-                  aspect-square rounded-lg border-2 p-4 relative overflow-visible
+                  aspect-square rounded-lg border-2 p-4 relative overflow-hidden
                   flex flex-col items-center justify-center gap-3
-                  transition-all duration-300
+                  transition-all duration-300 hover-elevate active-elevate-2
                   ${isSelected 
                     ? 'border-primary bg-primary/15 shadow-2xl shadow-primary/40' 
-                    : 'border-primary/40 bg-card/50 backdrop-blur-sm'
+                    : 'border-primary/40 bg-card/50 backdrop-blur-sm hover:border-primary/60'
                   }
                 `}
                 style={{
@@ -130,40 +130,28 @@ export function ClassFlowchartSection() {
                 }}
                 data-testid={`card-class-${classItem.id}`}
               >
-                {/* Animated glow border effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-lg border-2 border-primary"
-                  initial={{ opacity: 0 }}
-                  animate={{ 
-                    opacity: [0.3, 0.6, 0.3],
-                    scale: [1, 1.02, 1]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse"
-                  }}
-                  style={{ 
-                    display: isSelected ? 'block' : 'none',
-                    filter: 'blur(4px)'
-                  }}
-                />
-                
-                {/* Idle breathing animation */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={!isSelected ? {
-                    scale: [1, 1.02, 1],
-                  } : {}}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    ease: "easeInOut"
-                  }}
-                />
+                {/* Animated glow border effect - only when selected */}
+                {isSelected && (
+                  <motion.div
+                    className="absolute inset-0 rounded-lg border-2 border-primary pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                      opacity: [0.3, 0.6, 0.3],
+                      scale: [1, 1.02, 1]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                    style={{ 
+                      filter: 'blur(4px)'
+                    }}
+                  />
+                )}
 
                 <motion.div
+                  className="relative z-10"
                   animate={
                     isSelected 
                       ? { 
@@ -186,9 +174,8 @@ export function ClassFlowchartSection() {
                         }
                   }
                   whileHover={{
-                    scale: 1.2,
-                    rotate: [0, -5, 5, 0],
-                    transition: { duration: 0.3 }
+                    scale: 1.15,
+                    transition: { duration: 0.2 }
                   }}
                 >
                   <IconComponent 
@@ -200,25 +187,13 @@ export function ClassFlowchartSection() {
                   />
                 </motion.div>
                 
-                <motion.h3 
-                  className="font-serif text-sm md:text-base font-bold text-center leading-tight relative z-10"
-                  animate={isSelected ? {
-                    scale: [1, 1.05, 1]
-                  } : {}}
-                  transition={{ duration: 0.5 }}
+                <h3 
+                  className={`font-serif text-sm md:text-base font-bold text-center leading-tight relative z-10 transition-all duration-300 ${
+                    isSelected ? 'scale-105' : ''
+                  }`}
                 >
                   {classItem.title}
-                </motion.h3>
-
-                {/* Shimmer effect on hover */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent rounded-lg"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ 
-                    x: '200%',
-                    transition: { duration: 0.6, ease: "easeInOut" }
-                  }}
-                />
+                </h3>
               </motion.button>
             );
           })}
