@@ -67,18 +67,22 @@ export function ClassFlowchartSection() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
+      {/* Mobile: Show instruction text at top */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="text-center mb-6 md:mb-8"
+        animate={{ opacity: selectedClass ? 0 : 1, y: selectedClass ? -20 : 0 }}
+        transition={{ duration: 0.4 }}
+        className="lg:hidden text-center mb-6"
       >
-        <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-          Click any class to see the sessions covered throughout the semester
-        </p>
+        <div className="bg-primary/10 border-2 border-primary rounded-lg p-6 shadow-lg">
+          <p className="text-lg md:text-xl font-serif font-bold text-primary">
+            Click any class to see the sessions covered throughout the semester
+          </p>
+        </div>
       </motion.div>
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+        {/* Cards Grid */}
         <div className="grid grid-cols-2 gap-3 md:gap-4 lg:w-80 flex-shrink-0">
           {classData.map((classItem, idx) => {
             const IconComponent = classItem.icon;
@@ -89,20 +93,34 @@ export function ClassFlowchartSection() {
                 key={classItem.id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + idx * 0.08, duration: 0.4 }}
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ 
+                  initial: { delay: 0.5 + idx * 0.08, duration: 0.4 },
+                  whileHover: { duration: 0.2 },
+                  whileTap: { duration: 0.1 }
+                }}
                 onClick={() => setSelectedClass(isSelected ? null : classItem.id)}
                 className={`
                   aspect-square rounded-lg border-2 p-4
                   flex flex-col items-center justify-center gap-3
                   transition-all duration-300 hover-elevate active-elevate-2
                   ${isSelected 
-                    ? 'border-primary bg-primary/10 scale-105' 
-                    : 'border-primary/30 bg-card'
+                    ? 'border-primary bg-primary/10 shadow-lg shadow-primary/20' 
+                    : 'border-primary/30 bg-card hover:border-primary/50'
                   }
                 `}
                 data-testid={`card-class-${classItem.id}`}
               >
-                <IconComponent className={`w-8 h-8 md:w-10 md:h-10 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+                <motion.div
+                  animate={isSelected ? { 
+                    scale: [1, 1.1, 1],
+                    rotate: [0, 5, -5, 0]
+                  } : {}}
+                  transition={{ duration: 0.5 }}
+                >
+                  <IconComponent className={`w-8 h-8 md:w-10 md:h-10 transition-colors ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
+                </motion.div>
                 <h3 className="font-serif text-sm md:text-base font-bold text-center leading-tight">
                   {classItem.title}
                 </h3>
@@ -111,9 +129,37 @@ export function ClassFlowchartSection() {
           })}
         </div>
 
-        <div className="flex-1 min-h-[300px] lg:min-h-[400px]">
+        {/* Right Panel: Instruction Text OR Flowchart */}
+        <div className="flex-1 min-h-[300px] lg:min-h-[400px] relative">
           <AnimatePresence mode="wait">
-            {selectedClassData && (
+            {!selectedClass ? (
+              // Desktop: Show instruction text when no card is selected
+              <motion.div
+                key="instruction"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+                className="hidden lg:flex h-full items-center justify-center"
+              >
+                <div className="bg-primary/10 border-2 border-primary rounded-lg p-8 shadow-xl max-w-md">
+                  <motion.p 
+                    className="text-2xl font-serif font-bold text-primary text-center leading-relaxed"
+                    animate={{ 
+                      scale: [1, 1.02, 1],
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                  >
+                    Click any class to see the sessions covered throughout the semester
+                  </motion.p>
+                </div>
+              </motion.div>
+            ) : selectedClassData ? (
+              // Show flowchart when a card is selected
               <motion.div
                 key={selectedClassData.id}
                 initial={{ opacity: 0, x: 20 }}
@@ -132,7 +178,10 @@ export function ClassFlowchartSection() {
                       data-testid={`flowchart-header-${selectedClassData.id}`}
                     >
                       <div className="flex items-center gap-3">
-                        <selectedClassData.icon className="w-5 h-5 text-primary" />
+                        {(() => {
+                          const SelectedIcon = selectedClassData.icon;
+                          return <SelectedIcon className="w-5 h-5 text-primary" />;
+                        })()}
                         <span className="font-serif text-lg md:text-xl font-bold">
                           {selectedClassData.title}
                         </span>
@@ -176,7 +225,7 @@ export function ClassFlowchartSection() {
                   </div>
                 </div>
               </motion.div>
-            )}
+            ) : null}
           </AnimatePresence>
         </div>
       </div>
