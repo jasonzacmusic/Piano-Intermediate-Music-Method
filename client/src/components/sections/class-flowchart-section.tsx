@@ -199,36 +199,35 @@ export function ClassFlowchartSection() {
           })}
         </div>
 
-        {/* Right Panel: Instruction Text OR Flowchart */}
-        <div className="flex-1 min-h-[300px] lg:min-h-[400px] relative">
-          <AnimatePresence mode="wait">
-            {!selectedClass ? (
-              // Desktop: Show instruction text when no card is selected
-              <motion.div
-                key="instruction"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                className="hidden lg:flex h-full items-center justify-center"
+        {/* Right Panel: Instruction Text AND Flowchart */}
+        <div className="flex-1 min-h-[300px] lg:min-h-[400px] relative flex flex-col gap-6">
+          {/* Desktop: Always show instruction text */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+            className="hidden lg:flex items-center justify-center"
+          >
+            <div className="bg-primary/10 border-2 border-primary rounded-lg p-8 shadow-xl max-w-md">
+              <motion.p 
+                className="text-2xl font-serif font-bold text-primary text-center leading-relaxed"
+                animate={{ 
+                  scale: [1, 1.02, 1],
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
               >
-                <div className="bg-primary/10 border-2 border-primary rounded-lg p-8 shadow-xl max-w-md">
-                  <motion.p 
-                    className="text-2xl font-serif font-bold text-primary text-center leading-relaxed"
-                    animate={{ 
-                      scale: [1, 1.02, 1],
-                    }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "reverse"
-                    }}
-                  >
-                    Click any class to see the sessions covered throughout the semester
-                  </motion.p>
-                </div>
-              </motion.div>
-            ) : selectedClassData ? (
+                Click any class to see the sessions covered throughout the semester
+              </motion.p>
+            </div>
+          </motion.div>
+
+          {/* Flowchart area */}
+          <AnimatePresence mode="wait">
+            {selectedClassData ? (
               // Show flowchart when a card is selected
               <motion.div
                 key={selectedClassData.id}
@@ -236,7 +235,7 @@ export function ClassFlowchartSection() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="h-full"
+                className="flex-1"
               >
                 <div className="bg-muted/30 rounded-lg p-4 md:p-6 h-full">
                   <div className="flex flex-col items-center md:items-start gap-0 h-full">
