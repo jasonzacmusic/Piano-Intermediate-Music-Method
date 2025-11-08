@@ -91,39 +91,134 @@ export function ClassFlowchartSection() {
             return (
               <motion.button
                 key={classItem.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ scale: 1.05, y: -4 }}
-                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, scale: 0.5, rotateY: -180 }}
+                animate={{ 
+                  opacity: 1, 
+                  scale: 1,
+                  rotateY: 0
+                }}
+                whileHover={{ 
+                  scale: 1.12, 
+                  y: -8,
+                  rotateZ: 2,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ 
+                  scale: 0.95,
+                  transition: { duration: 0.1 }
+                }}
                 transition={{ 
-                  initial: { delay: 0.5 + idx * 0.08, duration: 0.4 },
-                  whileHover: { duration: 0.2 },
-                  whileTap: { duration: 0.1 }
+                  delay: 0.3 + idx * 0.12, 
+                  duration: 0.6,
+                  type: "spring",
+                  stiffness: 200
                 }}
                 onClick={() => setSelectedClass(isSelected ? null : classItem.id)}
                 className={`
-                  aspect-square rounded-lg border-2 p-4
+                  aspect-square rounded-lg border-2 p-4 relative overflow-visible
                   flex flex-col items-center justify-center gap-3
-                  transition-all duration-300 hover-elevate active-elevate-2
+                  transition-all duration-300
                   ${isSelected 
-                    ? 'border-primary bg-primary/10 shadow-lg shadow-primary/20' 
-                    : 'border-primary/30 bg-card hover:border-primary/50'
+                    ? 'border-primary bg-primary/15 shadow-2xl shadow-primary/40' 
+                    : 'border-primary/40 bg-card/50 backdrop-blur-sm'
                   }
                 `}
+                style={{
+                  boxShadow: isSelected 
+                    ? '0 0 40px rgba(147, 51, 234, 0.4), 0 0 80px rgba(147, 51, 234, 0.2)' 
+                    : undefined
+                }}
                 data-testid={`card-class-${classItem.id}`}
               >
+                {/* Animated glow border effect */}
                 <motion.div
-                  animate={isSelected ? { 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
+                  className="absolute inset-0 rounded-lg border-2 border-primary"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: [0.3, 0.6, 0.3],
+                    scale: [1, 1.02, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                  style={{ 
+                    display: isSelected ? 'block' : 'none',
+                    filter: 'blur(4px)'
+                  }}
+                />
+                
+                {/* Idle breathing animation */}
+                <motion.div
+                  className="absolute inset-0"
+                  animate={!isSelected ? {
+                    scale: [1, 1.02, 1],
+                  } : {}}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }}
+                />
+
+                <motion.div
+                  animate={
+                    isSelected 
+                      ? { 
+                          scale: [1, 1.15, 1],
+                          rotate: [0, 10, -10, 0],
+                          y: [0, -5, 0]
+                        }
+                      : {
+                          y: [0, -3, 0]
+                        }
+                  }
+                  transition={
+                    isSelected
+                      ? { duration: 0.8 }
+                      : {
+                          duration: 2.5,
+                          repeat: Infinity,
+                          repeatType: "reverse",
+                          ease: "easeInOut"
+                        }
+                  }
+                  whileHover={{
+                    scale: 1.2,
+                    rotate: [0, -5, 5, 0],
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <IconComponent 
+                    className={`w-8 h-8 md:w-10 md:h-10 transition-all duration-300 ${
+                      isSelected 
+                        ? 'text-primary drop-shadow-[0_0_8px_rgba(147,51,234,0.6)]' 
+                        : 'text-muted-foreground'
+                    }`} 
+                  />
+                </motion.div>
+                
+                <motion.h3 
+                  className="font-serif text-sm md:text-base font-bold text-center leading-tight relative z-10"
+                  animate={isSelected ? {
+                    scale: [1, 1.05, 1]
                   } : {}}
                   transition={{ duration: 0.5 }}
                 >
-                  <IconComponent className={`w-8 h-8 md:w-10 md:h-10 transition-colors ${isSelected ? 'text-primary' : 'text-muted-foreground'}`} />
-                </motion.div>
-                <h3 className="font-serif text-sm md:text-base font-bold text-center leading-tight">
                   {classItem.title}
-                </h3>
+                </motion.h3>
+
+                {/* Shimmer effect on hover */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent rounded-lg"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ 
+                    x: '200%',
+                    transition: { duration: 0.6, ease: "easeInOut" }
+                  }}
+                />
               </motion.button>
             );
           })}
