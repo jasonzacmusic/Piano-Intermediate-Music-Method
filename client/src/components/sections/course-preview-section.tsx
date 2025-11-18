@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Play } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, type SyntheticEvent } from "react";
 import { trackVideoPlay } from "@/lib/analytics";
 
 interface CoursePreviewProps {
@@ -25,9 +25,18 @@ export function CoursePreviewSection({ data }: CoursePreviewProps) {
     return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&rel=0`;
   };
 
-  const getYouTubeThumbnail = (url: string) => {
+  const getYouTubeThumbnail = (url: string, quality: 'max' | 'hq' = 'max') => {
     const videoId = getVideoId(url);
-    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+    const qualityStr = quality === 'max' ? 'maxresdefault' : 'hqdefault';
+    return `https://img.youtube.com/vi/${videoId}/${qualityStr}.jpg`;
+  };
+
+  const handleThumbnailError = (e: SyntheticEvent<HTMLImageElement>) => {
+    // Fallback to hqdefault if maxresdefault fails (404)
+    const img = e.currentTarget;
+    if (img.src.includes('maxresdefault')) {
+      img.src = getYouTubeThumbnail(data.videoUrl, 'hq');
+    }
   };
 
   const handlePlayClick = () => {
@@ -69,9 +78,10 @@ export function CoursePreviewSection({ data }: CoursePreviewProps) {
                   data-testid="button-preview-play"
                 >
                   <img
-                    src={getYouTubeThumbnail(data.videoUrl)}
+                    src={getYouTubeThumbnail(data.videoUrl, 'max')}
                     alt="Video Preview"
                     className="w-full h-full object-cover"
+                    onError={handleThumbnailError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/20 to-background/40" />
                   <div className="absolute inset-0 flex items-center justify-center">
