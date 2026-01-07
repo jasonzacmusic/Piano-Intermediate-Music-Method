@@ -5,26 +5,28 @@ export function StructuredData() {
     const courseSchema = {
       "@context": "https://schema.org",
       "@type": "Course",
-      "name": "Foundation Piano Course - Piano Lessons in Bangalore",
-      "description": "Learn piano from home with Jason Zac at Nathaniel School of Music, Bangalore's best music school. Online piano classes covering piano chords, progressions, music theory basics, ear training, chords and scales for beginners.",
-      "keywords": "piano lessons in bangalore, piano classes near me, online piano course, learn piano for beginners, music theory basics, ear training, jason zac piano, online piano classes, piano chords progressions",
-      "educationalLevel": "Beginner to Intermediate",
+      "name": "Intermediate Piano Course - Advanced Music Training with Jason Zachariah",
+      "description": "Master advanced piano techniques with Jason Zachariah at Nathaniel School of Music. This intermediate course covers Music Factory (transcription & analysis), Music Gym (3D skill exercises), advanced voicings, quartal harmony, voice leading, modular learning pathways, and graded certification for serious musicians.",
+      "keywords": "intermediate piano course, advanced piano lessons bangalore, music factory transcription, music gym exercises, quartal harmony piano, voice leading piano, graded certification, jason zachariah piano, online piano classes, advanced musicianship",
+      "educationalLevel": "Intermediate to Advanced",
       "teaches": [
-        "Piano technique and fundamentals",
-        "Music theory basics",
-        "Piano chords and progressions",
-        "Ear training - chords and scales",
-        "Rhythm and timing",
-        "Accompaniment and solo performance"
+        "Advanced piano voicings & techniques",
+        "Music Factory - Transcription & Analysis",
+        "Music Gym - 3D Skill Exercises",
+        "Quartal harmony & modern voicings",
+        "Voice leading & chord movement",
+        "World music patterns & rhythms",
+        "Modular learning pathways",
+        "Graded certification preparation"
       ],
       "provider": {
         "@type": "MusicSchool",
         "name": "Nathaniel School of Music",
         "alternateName": "NSM Bangalore",
-        "description": "Best music school in Bangalore offering piano lessons, online piano courses, and comprehensive music education",
-        "url": window.location.origin,
-        "logo": `${window.location.origin}/images/NSM LOGO White_1760966677704.png`,
-        "image": `${window.location.origin}/images/060A0073_1760966749362.JPG`,
+        "description": "Best music school in Bangalore offering advanced piano lessons, online piano courses, and comprehensive music education for intermediate to advanced musicians",
+        "url": "https://piano-course.nathanielschool.com",
+        "logo": "https://piano-course.nathanielschool.com/images/NSM LOGO White_1760966677704.png",
+        "image": "https://piano-course.nathanielschool.com/images/060A0073_1760966749362.JPG",
         "address": [
           {
             "@type": "PostalAddress",
@@ -52,7 +54,7 @@ export function StructuredData() {
           "https://youtube.com/jasonzac",
           "https://instagram.com/jasonzac"
         ],
-        "priceRange": "₹₹"
+        "priceRange": "₹₹₹"
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
@@ -61,8 +63,9 @@ export function StructuredData() {
         "inLanguage": "en",
         "instructor": {
           "@type": "Person",
-          "name": "Jason Zac",
-          "description": "Professional piano instructor specializing in online piano classes, music theory basics, and piano chords progressions",
+          "name": "Jason Zachariah",
+          "alternateName": "Jason Zac",
+          "description": "Professional piano instructor with 115k+ YouTube subscribers, specializing in advanced musicianship, Music Factory transcription, and Music Gym exercises",
           "jobTitle": "Piano Instructor & Music Educator",
           "sameAs": [
             "https://youtube.com/jasonzac",
@@ -74,7 +77,7 @@ export function StructuredData() {
           {
             "@type": "VirtualLocation",
             "name": "Online Piano Classes",
-            "description": "Learn piano from home via Zoom"
+            "description": "Learn advanced piano techniques from home via Zoom"
           },
           {
             "@type": "Place",
@@ -91,22 +94,44 @@ export function StructuredData() {
       "offers": [
         {
           "@type": "Offer",
+          "name": "32 Hours Package",
           "price": "20000",
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
           "eligibleRegion": {
             "@type": "Place",
-            "name": "India",
-            "geo": {
-              "@type": "Country",
-              "name": "India"
-            }
+            "name": "India"
           },
           "validFrom": "2024-01-01"
         },
         {
           "@type": "Offer",
+          "name": "32 Hours Package",
           "price": "420",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "eligibleRegion": {
+            "@type": "Place",
+            "name": "International"
+          },
+          "validFrom": "2024-01-01"
+        },
+        {
+          "@type": "Offer",
+          "name": "65 Hours Package",
+          "price": "35000",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
+          "eligibleRegion": {
+            "@type": "Place",
+            "name": "India"
+          },
+          "validFrom": "2024-01-01"
+        },
+        {
+          "@type": "Offer",
+          "name": "65 Hours Package",
+          "price": "700",
           "priceCurrency": "USD",
           "availability": "https://schema.org/InStock",
           "eligibleRegion": {
@@ -130,34 +155,34 @@ export function StructuredData() {
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What are the best piano lessons in Bangalore?",
+          "name": "What is the Intermediate Piano Course at Nathaniel School of Music?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nathaniel School of Music offers the best piano lessons in Bangalore, taught by Jason Zac. Our Foundation Piano Course covers piano chords, progressions, music theory basics, ear training, and performance skills for beginners and intermediate learners."
+            "text": "The Intermediate Piano Course is an advanced 6-month program taught by Jason Zachariah. It covers Music Factory (transcription & analysis), Music Gym (3D skill exercises), quartal harmony, voice leading, modular learning pathways, and graded certification for musicians ready to take their skills to the next level."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I learn piano online from home?",
+          "name": "What is Music Factory and Music Gym in the intermediate course?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes! Our online piano classes allow you to learn piano from home via Zoom. Jason Zac teaches comprehensive online piano courses covering piano technique, music theory basics, ear training, chords and scales, perfect for beginners."
+            "text": "Music Factory focuses on transcription and analysis of professional recordings, teaching you to decode what great musicians play. Music Gym provides 3D skill exercises that build technique, coordination, and musicality through structured practice routines designed for intermediate to advanced players."
           }
         },
         {
           "@type": "Question",
-          "name": "What will I learn in the piano course?",
+          "name": "Can I take the intermediate piano course online?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "You'll master piano chords progressions, music theory basics, ear training with chords and scales, rhythm training, and both accompaniment and solo performance skills. The course is designed for beginners to learn piano comprehensively."
+            "text": "Yes! The Intermediate Piano Course is available in three modes: fully online via Zoom, offline at our Bangalore locations (Langford Town & Sahakar Nagar), or a hybrid combination. Online students receive the same comprehensive curriculum including Music Factory, Music Gym, and graded certification."
           }
         },
         {
           "@type": "Question",
-          "name": "Is Nathaniel School of Music the best music school in Bangalore?",
+          "name": "Who is Jason Zachariah and what makes him qualified to teach?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, Nathaniel School of Music is recognized as one of the best music schools in Bangalore, offering structured piano courses with performance-based learning. We have centers in Langford Town and Sahakar Nagar, plus online piano classes worldwide."
+            "text": "Jason Zachariah is a Bangalore-based multi-instrumentalist with 115k+ YouTube subscribers and 15k+ Instagram followers. With over two decades of experience as a performer, educator, and producer, he has released three albums blending Indian Classical and Celtic Folk influences. His teaching approach emphasizes becoming a musician first, with piano as a natural extension of complete musicianship."
           }
         }
       ]

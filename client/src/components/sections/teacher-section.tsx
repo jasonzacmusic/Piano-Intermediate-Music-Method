@@ -27,7 +27,7 @@ export function TeacherSection() {
   ];
 
   return (
-    <section className="py-8 md:py-12 lg:py-14 bg-card/30">
+    <section id="instructor" className="py-8 md:py-12 lg:py-14 bg-card/30">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

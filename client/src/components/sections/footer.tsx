@@ -28,7 +28,7 @@ interface FooterProps {
 
 export function Footer({ data }: FooterProps) {
   return (
-    <footer className="bg-background border-t border-border py-12 md:py-16">
+    <footer id="contact" className="bg-background border-t border-border py-12 md:py-16">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div className="space-y-6">
