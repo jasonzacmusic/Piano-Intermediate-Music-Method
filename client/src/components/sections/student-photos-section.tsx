@@ -360,6 +360,7 @@ export function StudentPhotosSection() {
                   <img
                     src={photo.src}
                     alt={photo.alt}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     style={{
                       filter: "sepia(0.3) brightness(0.85) contrast(1.15) saturate(0.85) hue-rotate(10deg)",

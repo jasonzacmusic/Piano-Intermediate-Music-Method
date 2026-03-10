@@ -122,6 +122,7 @@ export function FreeTutorialsSection() {
                       <img
                         src={getYouTubeThumbnail(tutorial.url, 'max')}
                         alt={tutorial.title}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                         onError={(e) => handleThumbnailError(e, tutorial.url)}
                       />

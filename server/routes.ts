@@ -119,7 +119,7 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
   }
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export function setupRoutes(app: Express): void {
   app.get("/api/geo", async (req: Request, res) => {
     try {
       // First check for country headers from CDN/hosting providers
@@ -249,7 +249,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  const httpServer = createServer(app);
+}
 
+export async function registerRoutes(app: Express): Promise<Server> {
+  setupRoutes(app);
+  const httpServer = createServer(app);
   return httpServer;
 }

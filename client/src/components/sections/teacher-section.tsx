@@ -55,6 +55,7 @@ export function TeacherSection() {
               <img
                 src={teacherImage}
                 alt="Jason Zachariah at the piano"
+                loading="lazy"
                 className="w-full h-full object-cover"
                 data-testid="img-teacher"
               />
