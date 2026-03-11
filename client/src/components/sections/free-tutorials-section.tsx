@@ -18,7 +18,7 @@ const selectedTutorials: Tutorial[] = [
   },
   {
     title: "5 Piano Techniques I Use ALL the Time for Fills and Solos",
-    url: "https://youtu.be/JHPK4FCSPOg",
+    url: "https://youtu.be/JHPK4FCSP0g",
     category: "piano"
   },
   {
@@ -144,7 +144,7 @@ export function FreeTutorialsSection() {
                     />
                   )}
                 </div>
-                
+
                 <div className="p-3 md:p-4">
                   <h3 className="text-sm md:text-base font-medium leading-tight line-clamp-2">
                     {tutorial.title}
