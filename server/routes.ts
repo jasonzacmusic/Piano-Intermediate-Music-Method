@@ -1,32 +1,36 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { google } from "googleapis";
+import { sheets as sheetsApi } from "@googleapis/sheets";
+import { GoogleAuth } from "google-auth-library";
 import { Resend } from "resend";
-import { courseBuilderFormSchema, type CourseBuilderForm } from "@shared/schema";
+import {
+  courseBuilderFormSchema,
+  type CourseBuilderForm,
+} from "@shared/schema";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function saveToGoogleSheets(data: CourseBuilderForm) {
   try {
-    let privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY || '';
-    
+    let privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY || "";
+
     if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
       privateKey = privateKey.slice(1, -1);
     }
-    
-    privateKey = privateKey.replace(/\\n/g, '\n');
 
-    const auth = new google.auth.GoogleAuth({
+    privateKey = privateKey.replace(/\\n/g, "\n");
+
+    const auth = new GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
         private_key: privateKey,
       },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    const sheets = google.sheets({ version: 'v4', auth });
-    const spreadsheetId = '16BNZdshYZC-SeG2Yar1pzM1ggQu2k9Y73U_CGlCYDck';
+    const sheets = sheetsApi({ version: "v4", auth });
+    const spreadsheetId = "16BNZdshYZC-SeG2Yar1pzM1ggQu2k9Y73U_CGlCYDck";
 
     const row = [
       new Date().toISOString(),
@@ -36,40 +40,41 @@ async function saveToGoogleSheets(data: CourseBuilderForm) {
       data.city,
       data.country,
       data.signupFor,
-      data.learningGoals.join(', '),
-      data.preferredGenre.join(', '),
+      data.learningGoals.join(", "),
+      data.preferredGenre.join(", "),
       data.musicBackground,
-      data.pianoExperience.join(', ') + (data.pianoExperienceOther ? ` - ${data.pianoExperienceOther}` : ''),
-      data.classInterests.join(', '),
+      data.pianoExperience.join(", ") +
+        (data.pianoExperienceOther ? ` - ${data.pianoExperienceOther}` : ""),
+      data.classInterests.join(", "),
       data.preferredCallTime,
     ];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Intermediate!A:M',
-      valueInputOption: 'RAW',
+      range: "Intermediate!A:M",
+      valueInputOption: "RAW",
       requestBody: {
         values: [row],
       },
     });
 
-    console.log('[COURSE-BUILDER] Successfully saved to Google Sheets');
+    console.log("[COURSE-BUILDER] Successfully saved to Google Sheets");
   } catch (error) {
-    console.error('[COURSE-BUILDER] Google Sheets error:', error);
-    throw new Error('Failed to save to Google Sheets');
+    console.error("[COURSE-BUILDER] Google Sheets error:", error);
+    throw new Error("Failed to save to Google Sheets");
   }
 }
 
 async function sendEmailNotifications(data: CourseBuilderForm) {
   try {
-    const firstName = data.name.split(' ')[0];
+    const firstName = data.name.split(" ")[0];
 
     const adminEmailHtml = `
       <p>A new enquiry has been submitted for the Intermediate Course.</p>
       <p><strong>Name:</strong> ${data.name}</p>
       <p><strong>WhatsApp:</strong> ${data.countryCode} ${data.whatsappNumber}</p>
       <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Classes Selected:</strong> ${data.classInterests.join(', ')}</p>
+      <p><strong>Classes Selected:</strong> ${data.classInterests.join(", ")}</p>
       <p>The full form response is available in the Google Sheet: NSM Website - Form Responses &gt; Intermediate</p>
     `;
 
@@ -88,34 +93,46 @@ async function sendEmailNotifications(data: CourseBuilderForm) {
       <p>- Nathaniel School of Music</p>
     `;
 
-    console.log('[COURSE-BUILDER] Attempting to send emails via Resend...');
-    console.log('[COURSE-BUILDER] Admin email to:', 'music@nathanielschool.com');
-    console.log('[COURSE-BUILDER] User email to:', data.email);
+    console.log("[COURSE-BUILDER] Attempting to send emails via Resend...");
+    console.log(
+      "[COURSE-BUILDER] Admin email to:",
+      "music@nathanielschool.com",
+    );
+    console.log("[COURSE-BUILDER] User email to:", data.email);
 
     const [adminResult, userResult] = await Promise.all([
       resend.emails.send({
-        from: 'Nathaniel School of Music <music@notifications.nathanielschool.com>',
-        to: ['music@nathanielschool.com'],
+        from: "Nathaniel School of Music <music@notifications.nathanielschool.com>",
+        to: ["music@nathanielschool.com"],
         subject: `New Intermediate Course Enquiry`,
         html: adminEmailHtml,
-        replyTo: 'music@nathanielschool.com',
+        replyTo: "music@nathanielschool.com",
       }),
       resend.emails.send({
-        from: 'Nathaniel School of Music <music@notifications.nathanielschool.com>',
+        from: "Nathaniel School of Music <music@notifications.nathanielschool.com>",
         to: [data.email],
-        subject: 'Thank you for reaching out to Nathaniel School of Music',
+        subject: "Thank you for reaching out to Nathaniel School of Music",
         html: userEmailHtml,
-        replyTo: 'music@nathanielschool.com',
+        replyTo: "music@nathanielschool.com",
       }),
     ]);
 
-    console.log('[COURSE-BUILDER] Admin email result:', JSON.stringify(adminResult));
-    console.log('[COURSE-BUILDER] User email result:', JSON.stringify(userResult));
-    console.log('[COURSE-BUILDER] Successfully sent email notifications');
+    console.log(
+      "[COURSE-BUILDER] Admin email result:",
+      JSON.stringify(adminResult),
+    );
+    console.log(
+      "[COURSE-BUILDER] User email result:",
+      JSON.stringify(userResult),
+    );
+    console.log("[COURSE-BUILDER] Successfully sent email notifications");
   } catch (error) {
-    console.error('[COURSE-BUILDER] Email error:', error);
-    console.error('[COURSE-BUILDER] Error details:', JSON.stringify(error, null, 2));
-    throw new Error('Failed to send email notifications');
+    console.error("[COURSE-BUILDER] Email error:", error);
+    console.error(
+      "[COURSE-BUILDER] Error details:",
+      JSON.stringify(error, null, 2),
+    );
+    throw new Error("Failed to send email notifications");
   }
 }
 
@@ -123,43 +140,52 @@ export function setupRoutes(app: Express): void {
   app.get("/api/geo", async (req: Request, res) => {
     try {
       // First check for country headers from CDN/hosting providers
-      let country = req.headers["x-vercel-ip-country"] as string || 
-                   req.headers["cf-ipcountry"] as string ||
-                   req.headers["x-replit-user-ip-country"] as string;
-      
+      let country =
+        (req.headers["x-vercel-ip-country"] as string) ||
+        (req.headers["cf-ipcountry"] as string) ||
+        (req.headers["x-replit-user-ip-country"] as string);
+
       // If no header available, extract IP and use geolocation API
       if (!country) {
         // Extract real client IP from x-forwarded-for (first IP is the client)
         const forwardedFor = req.headers["x-forwarded-for"] as string;
-        const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : req.ip;
-        
+        const clientIp = forwardedFor
+          ? forwardedFor.split(",")[0].trim()
+          : req.ip;
+
         console.log(`[GEO] No country header, looking up IP: ${clientIp}`);
-        
+
         // Use free ip-api.com service for geolocation (no key needed, 45 req/min limit)
         // Falls back to ipapi.co if first service fails
         try {
-          const geoResponse = await fetch(`http://ip-api.com/json/${clientIp}?fields=status,countryCode`);
+          const geoResponse = await fetch(
+            `http://ip-api.com/json/${clientIp}?fields=status,countryCode`,
+          );
           const geoData = await geoResponse.json();
-          
-          if (geoData.status === 'success' && geoData.countryCode) {
+
+          if (geoData.status === "success" && geoData.countryCode) {
             country = geoData.countryCode;
             console.log(`[GEO] IP lookup success: ${clientIp} -> ${country}`);
           } else {
-            throw new Error('ip-api.com failed');
+            throw new Error("ip-api.com failed");
           }
         } catch (error) {
           console.log(`[GEO] ip-api.com failed, trying ipapi.co`);
           try {
-            const backupResponse = await fetch(`https://ipapi.co/${clientIp}/country_code/`);
+            const backupResponse = await fetch(
+              `https://ipapi.co/${clientIp}/country_code/`,
+            );
             country = (await backupResponse.text()).trim();
             console.log(`[GEO] ipapi.co success: ${clientIp} -> ${country}`);
           } catch (backupError) {
-            console.error(`[GEO] Both geolocation services failed, defaulting to international`);
+            console.error(
+              `[GEO] Both geolocation services failed, defaulting to international`,
+            );
             country = "US"; // Default to international (US) instead of India
           }
         }
       }
-      
+
       const domesticCountries = [
         "IN", // India
         "NP", // Nepal
@@ -167,14 +193,38 @@ export function setupRoutes(app: Express): void {
         "BD", // Bangladesh
         "PK", // Pakistan
         "BT", // Bhutan
-        "MV"  // Maldives
+        "MV", // Maldives
       ];
 
       const europeanCountries = [
         // EU Member States
-        "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
-        "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
-        "PL", "PT", "RO", "SK", "SI", "ES", "SE",
+        "AT",
+        "BE",
+        "BG",
+        "HR",
+        "CY",
+        "CZ",
+        "DK",
+        "EE",
+        "FI",
+        "FR",
+        "DE",
+        "GR",
+        "HU",
+        "IE",
+        "IT",
+        "LV",
+        "LT",
+        "LU",
+        "MT",
+        "NL",
+        "PL",
+        "PT",
+        "RO",
+        "SK",
+        "SI",
+        "ES",
+        "SE",
         // European Free Trade Association (EFTA)
         "IS", // Iceland
         "LI", // Liechtenstein
@@ -208,18 +258,20 @@ export function setupRoutes(app: Express): void {
         region = "international";
       }
 
-      console.log(`[GEO] Final result - Country: ${country}, Region: ${region}`);
+      console.log(
+        `[GEO] Final result - Country: ${country}, Region: ${region}`,
+      );
 
       res.json({
         country,
-        region
+        region,
       });
     } catch (error) {
-      console.error('[GEO] Error in geo endpoint:', error);
+      console.error("[GEO] Error in geo endpoint:", error);
       // On error, default to international pricing
       res.json({
         country: "US",
-        region: "international"
+        region: "international",
       });
     }
   });
@@ -235,20 +287,21 @@ export function setupRoutes(app: Express): void {
 
       res.json({ success: true });
     } catch (error: any) {
-      console.error('[COURSE-BUILDER] Error:', error);
-      
-      if (error.name === 'ZodError') {
-        return res.status(400).json({ 
-          error: "Invalid form data. Please check your inputs and try again." 
+      console.error("[COURSE-BUILDER] Error:", error);
+
+      if (error.name === "ZodError") {
+        return res.status(400).json({
+          error: "Invalid form data. Please check your inputs and try again.",
         });
       }
-      
-      res.status(500).json({ 
-        error: error.message || "An unexpected error occurred. Please try again later." 
+
+      res.status(500).json({
+        error:
+          error.message ||
+          "An unexpected error occurred. Please try again later.",
       });
     }
   });
-
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
