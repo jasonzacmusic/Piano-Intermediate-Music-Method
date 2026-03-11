@@ -1,13 +1,13 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./storage.js";
 import { sheets as sheetsApi } from "@googleapis/sheets";
 import { GoogleAuth } from "google-auth-library";
 import { Resend } from "resend";
 import {
   courseBuilderFormSchema,
   type CourseBuilderForm,
-} from "@shared/schema";
+} from "../shared/schema.js";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
